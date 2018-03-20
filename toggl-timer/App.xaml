@@ -1,8 +1,9 @@
-﻿<Application
+﻿<windows:PrismUnityApplication
     x:Class="toggl_timer.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:windows="using:Prism.Unity.Windows"
     xmlns:local="using:toggl_timer"
     RequestedTheme="Light">
 
-</Application>
+</windows:PrismUnityApplication>
