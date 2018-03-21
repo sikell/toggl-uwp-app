@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using MetroLog;
 using Prism.Commands;
+using Prism.Windows.Navigation;
 using Prism.Windows.Validation;
+using toggl_timer.Services;
 using toggl_timer.Services.Api;
 
 namespace toggl_timer.ViewModels
@@ -10,9 +12,8 @@ namespace toggl_timer.ViewModels
     {
         private readonly ILogger _log = LogManagerFactory.DefaultLogManager.GetLogger<StartPageViewModel>();
         private string _username;
-        private string _token;
 
-        public StartPageViewModel(IApiClient apiClient)
+        public StartPageViewModel(IAuthService authService)
         {
             GetUserCommand = new DelegateCommand(async () =>
             {
@@ -22,7 +23,7 @@ namespace toggl_timer.ViewModels
                     return;
                 }
 
-                var user = await apiClient.GetUser(_token);
+                var user = await authService.GetUser();
                 Username = user.data.fullname;
             });
         }
@@ -33,13 +34,6 @@ namespace toggl_timer.ViewModels
             set => SetProperty(ref _username, value);
         }
 
-        [Required(ErrorMessage = "Token is required.")]
-        public string Token
-        {
-            get => _token;
-            set => SetProperty(ref _token, value);
-        }
-
-        public DelegateCommand GetUserCommand { get; private set; }
+        public DelegateCommand GetUserCommand { get; }
     }
 }

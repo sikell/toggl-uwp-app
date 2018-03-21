@@ -9,6 +9,8 @@ namespace toggl_timer.Services.Api
 {
     public interface IApiClient
     {
-        Task<User> GetUser(String apiToken);
+        Task<User> GetUser(string apiToken);
+
+        Task<User> GetUser(string username, string password);
     }
 }

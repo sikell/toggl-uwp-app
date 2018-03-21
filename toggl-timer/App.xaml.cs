@@ -5,6 +5,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Prism.Unity.Windows;
 using System.Threading.Tasks;
+using toggl_timer.Services;
 using toggl_timer.Services.Api;
 
 namespace toggl_timer
@@ -25,7 +26,7 @@ namespace toggl_timer
 
         protected override Task OnLaunchApplicationAsync(LaunchActivatedEventArgs args)
         {
-            NavigationService.Navigate("Start", null);
+            NavigationService.Navigate("Login", null);
             return Task.FromResult(true);
         }
 
@@ -33,6 +34,7 @@ namespace toggl_timer
         {
             base.ConfigureContainer();
             RegisterTypeIfMissing(typeof(IApiClient), typeof(ApiClient), true);
+            RegisterTypeIfMissing(typeof(IAuthService), typeof(AuthService), true);
         }
     }
 }

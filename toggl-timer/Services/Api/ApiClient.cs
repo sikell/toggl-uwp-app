@@ -32,8 +32,19 @@ namespace toggl_timer.Services.Api
 
         public async Task<User> GetUser(string apiToken)
         {
-            const string requestUri = "me";
             var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(apiToken + ":api_token"));
+            return await GetUserByBasicAuth(credentials);
+        }
+
+        public async Task<User> GetUser(string username, string password)
+        {
+            var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(username + ":" + password));
+            return await GetUserByBasicAuth(credentials);
+        }
+
+        private async Task<User> GetUserByBasicAuth(string credentials)
+        {
+            const string requestUri = "me";
             var request = new HttpRequestMessage
             {
                 RequestUri = new Uri(_client.BaseAddress + requestUri),
