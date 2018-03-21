@@ -5,6 +5,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Prism.Unity.Windows;
 using System.Threading.Tasks;
+using toggl_timer.Services.Api;
 
 namespace toggl_timer
 {
@@ -26,6 +27,12 @@ namespace toggl_timer
         {
             NavigationService.Navigate("Start", null);
             return Task.FromResult(true);
+        }
+
+        protected override void ConfigureContainer()
+        {
+            base.ConfigureContainer();
+            RegisterTypeIfMissing(typeof(IApiClient), typeof(ApiClient), true);
         }
     }
 }

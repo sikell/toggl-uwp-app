@@ -2,7 +2,6 @@
     x:Class="toggl_timer.Views.StartPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:toggl_timer.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mvvm="using:Prism.Windows.Mvvm"
@@ -16,13 +15,35 @@
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="Width" Value="300" />
         </Style>
+        <Style x:Key="GeneralTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0,15,0,0" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Width" Value="300" />
+        </Style>
+        <Style x:Key="GeneralButtonStyle" TargetType="Button">
+            <Setter Property="Margin" Value="0,15,0,0" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Width" Value="300" />
+        </Style>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel>
             <TextBox x:Name="UsernameTextBox"
                      Text="{Binding Username, Mode=TwoWay}"
-                     Style="{StaticResource GeneralTextBoxStyle}"/>
+                     Style="{StaticResource GeneralTextBoxStyle}" />
+            <TextBox x:Name="TokenTextBox"
+                     Text="{Binding Token, Mode=TwoWay}"
+                     Style="{StaticResource GeneralTextBoxStyle}" />
+            <Button x:Name="SubmitButton"
+                    Content="Load"
+                    Command="{Binding GetUserCommand}"
+                    Style="{StaticResource GeneralButtonStyle}" />
+            <TextBlock x:Name="UsernameTextBlock"
+                       Text="{Binding Username, Mode=TwoWay}" 
+                       Style="{StaticResource GeneralTextBlockStyle}"/>
         </StackPanel>
     </Grid>
 </Page>
