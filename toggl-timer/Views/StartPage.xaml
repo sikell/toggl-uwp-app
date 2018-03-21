@@ -9,19 +9,7 @@
     mvvm:ViewModelLocator.AutoWireViewModel="True">
 
     <Page.Resources>
-        <Style x:Key="GeneralTextBoxStyle" TargetType="TextBox">
-            <Setter Property="Margin" Value="0,15,0,0" />
-            <Setter Property="VerticalAlignment" Value="Top" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="Width" Value="300" />
-        </Style>
         <Style x:Key="GeneralTextBlockStyle" TargetType="TextBlock">
-            <Setter Property="Margin" Value="0,15,0,0" />
-            <Setter Property="VerticalAlignment" Value="Top" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="Width" Value="300" />
-        </Style>
-        <Style x:Key="GeneralButtonStyle" TargetType="Button">
             <Setter Property="Margin" Value="0,15,0,0" />
             <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -31,10 +19,6 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel>
-            <Button x:Name="SubmitButton"
-                    Content="Load"
-                    Command="{Binding GetUserCommand}"
-                    Style="{StaticResource GeneralButtonStyle}" />
             <TextBlock x:Name="UsernameTextBlock"
                        Text="{Binding Username, Mode=TwoWay}" 
                        Style="{StaticResource GeneralTextBlockStyle}"/>

@@ -15,17 +15,7 @@ namespace toggl_timer.ViewModels
 
         public StartPageViewModel(IAuthService authService)
         {
-            GetUserCommand = new DelegateCommand(async () =>
-            {
-                if (!ValidateProperties())
-                {
-                    _log.Warn("Not all props are valid.");
-                    return;
-                }
-
-                var user = await authService.GetUser();
-                Username = user.data.fullname;
-            });
+            Load(authService);
         }
 
         public string Username
@@ -34,6 +24,11 @@ namespace toggl_timer.ViewModels
             set => SetProperty(ref _username, value);
         }
 
-        public DelegateCommand GetUserCommand { get; }
+        private async void Load(IAuthService authService)
+        {
+            var user = await authService.GetUser();
+            Username = user.data.fullname;
+        }
+
     }
 }
