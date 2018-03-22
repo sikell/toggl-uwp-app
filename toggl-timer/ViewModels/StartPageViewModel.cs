@@ -1,4 +1,6 @@
-﻿using MetroLog;
+﻿using System.Collections.Generic;
+using MetroLog;
+using Prism.Windows.Navigation;
 using Prism.Windows.Validation;
 using toggl_timer.Services;
 using toggl_timer.Services.Api.Model;
@@ -6,15 +8,20 @@ using toggl_timer.Services.Model;
 
 namespace toggl_timer.ViewModels
 {
-    class StartPageViewModel : ValidatableBindableBase
+    class StartPageViewModel : ValidatableBindableBase, INavigationAware
     {
         private readonly ILogger _log = LogManagerFactory.DefaultLogManager.GetLogger<StartPageViewModel>();
+
         private User _user;
         private TimeEntry _current;
 
-        public StartPageViewModel(IAuthService authService, ITimeEntryService timeEntryService)
+        private readonly IAuthService _authService;
+        private readonly ITimeEntryService _timeEntryService;
+
+        public StartPageViewModel(ITimeEntryService timeEntryService, IAuthService authService)
         {
-            Load(authService, timeEntryService);
+            _timeEntryService = timeEntryService;
+            _authService = authService;
         }
 
         public User User
@@ -28,12 +35,16 @@ namespace toggl_timer.ViewModels
             get => _current;
             set => SetProperty(ref _current, value);
         }
-
-        private async void Load(IAuthService authService, ITimeEntryService timeEntryService)
+        
+        public async void OnNavigatedTo(NavigatedToEventArgs e, Dictionary<string, object> viewModelState)
         {
-            User = await authService.GetUser();
-            Current = await timeEntryService.GetCurrent();
+            User = await _authService.GetUser();
+            Current = await _timeEntryService.GetCurrent();
         }
 
+        public void OnNavigatingFrom(NavigatingFromEventArgs e, Dictionary<string, object> viewModelState, bool suspending)
+        {
+            _log.Info("Leave page start");
+        }
     }
 }

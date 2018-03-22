@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using MetroLog;
 using Prism.Commands;
 using Prism.Windows.Navigation;
@@ -7,14 +8,21 @@ using toggl_timer.Services;
 
 namespace toggl_timer.ViewModels
 {
-    public class LoginPageViewModel : ValidatableBindableBase
+    public class LoginPageViewModel : ValidatableBindableBase, INavigationAware
     {
-        private readonly ILogger _log = LogManagerFactory.DefaultLogManager.GetLogger<StartPageViewModel>();
+        private readonly ILogger _log = LogManagerFactory.DefaultLogManager.GetLogger<LoginPageViewModel>();
+
         private string _username;
         private string _password;
 
-        public LoginPageViewModel(IAuthService authService, INavigationService navigationService)
+        private readonly IAuthService _authService;
+        private readonly INavigationService _navigationService;
+
+        public LoginPageViewModel(INavigationService navigationService, IAuthService authService)
         {
+            _navigationService = navigationService;
+            _authService = authService;
+
             LoginCommand = new DelegateCommand(async () =>
             {
                 _log.Warn("Login user.");
@@ -30,7 +38,7 @@ namespace toggl_timer.ViewModels
                 }
             });
         }
-
+        
         [Required(ErrorMessage = "Username is required.")]
         public string Username
         {
@@ -46,6 +54,21 @@ namespace toggl_timer.ViewModels
         }
 
         public DelegateCommand LoginCommand { get; }
-        
+
+        public void OnNavigatedTo(NavigatedToEventArgs e, Dictionary<string, object> viewModelState)
+        {
+            _log.Info("Navigated to login page");
+            if (_authService.IsAuthenticated())
+            {
+                _log.Info("User is authenticated navigate to start.");
+                _navigationService.Navigate("Start", null);
+            }
+        }
+
+        public void OnNavigatingFrom(NavigatingFromEventArgs e, Dictionary<string, object> viewModelState,
+            bool suspending)
+        {
+            _log.Info("Leave login page");
+        }
     }
 }
