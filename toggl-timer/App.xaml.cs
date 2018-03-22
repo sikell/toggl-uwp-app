@@ -1,32 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Windows.ApplicationModel.Activation;
+﻿using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Prism.Unity.Windows;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 using toggl_timer.Services;
 using toggl_timer.Services.Api;
 
 namespace toggl_timer
 {
-    /// <summary>
-    /// Stellt das anwendungsspezifische Verhalten bereit, um die Standardanwendungsklasse zu ergänzen.
-    /// </summary>
+
     sealed partial class App : PrismUnityApplication
     {
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
+
         public App()
         {
             InitializeComponent();
         }
 
+        protected override UIElement CreateShell(Frame rootFrame)
+        {
+            var shell = Container.TryResolve<AppShell>();
+            shell.SetContentFrame(rootFrame);
+            return shell;
+        }
+        
         protected override Task OnLaunchApplicationAsync(LaunchActivatedEventArgs args)
         {
-            NavigationService.Navigate("Login", null);
+            NavigationService.Navigate(PageTokens.Login.ToString(), null);
             return Task.FromResult(true);
         }
 

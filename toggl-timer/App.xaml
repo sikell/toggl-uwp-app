@@ -6,4 +6,12 @@
     xmlns:local="using:toggl_timer"
     RequestedTheme="Light">
 
+    <windows:PrismUnityApplication.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Themes/DefaultTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </windows:PrismUnityApplication.Resources>
+
 </windows:PrismUnityApplication>
