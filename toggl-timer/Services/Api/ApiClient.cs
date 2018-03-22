@@ -30,7 +30,7 @@ namespace toggl_timer.Services.Api
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<TimeEntry> GetCurrentRunning(string apiToken)
+        public async Task<TimeEntryDto> GetCurrentRunning(string apiToken)
         {
             var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(apiToken + ":api_token"));
             const string requestUri = "time_entries/current";
@@ -52,22 +52,22 @@ namespace toggl_timer.Services.Api
             }
 
             var readAsStringAsync = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<TimeEntryWrapper>(readAsStringAsync).data;
+            return JsonConvert.DeserializeObject<TimeEntryWrapperDto>(readAsStringAsync).data;
         }
 
-        public async Task<User> GetUser(string apiToken)
+        public async Task<UserDto> GetUser(string apiToken)
         {
             var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(apiToken + ":api_token"));
             return await GetUserByBasicAuth(credentials);
         }
 
-        public async Task<User> GetUser(string username, string password)
+        public async Task<UserDto> GetUser(string username, string password)
         {
             var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(username + ":" + password));
             return await GetUserByBasicAuth(credentials);
         }
 
-        private async Task<User> GetUserByBasicAuth(string credentials)
+        private async Task<UserDto> GetUserByBasicAuth(string credentials)
         {
             const string requestUri = "me";
             var request = new HttpRequestMessage
@@ -88,7 +88,7 @@ namespace toggl_timer.Services.Api
             }
 
             var readAsStringAsync = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<User>(readAsStringAsync);
+            return JsonConvert.DeserializeObject<UserDto>(readAsStringAsync);
         }
     }
 }

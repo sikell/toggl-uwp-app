@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using toggl_timer.Services.Api.Model;
+using toggl_timer.Services.Model;
 
 namespace toggl_timer.Services
 {

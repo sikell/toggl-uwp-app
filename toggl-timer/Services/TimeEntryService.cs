@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using toggl_timer.Services.Api;
 using toggl_timer.Services.Api.Model;
+using toggl_timer.Services.Model;
 
 namespace toggl_timer.Services
 {
@@ -15,9 +17,15 @@ namespace toggl_timer.Services
             _apiClient = apiClient;
         }
 
-        public Task<TimeEntry> GetCurrent()
+        public async Task<TimeEntry> GetCurrent()
         {
-            return _apiClient.GetCurrentRunning(_authService.GetToken());
+            var timeEntry = await _apiClient.GetCurrentRunning(_authService.GetToken());
+            return new TimeEntry()
+            {
+                Id = timeEntry.id,
+                Description = timeEntry.description,
+                At = DateTime.Parse(timeEntry.at)
+            };
         }
     }
 }

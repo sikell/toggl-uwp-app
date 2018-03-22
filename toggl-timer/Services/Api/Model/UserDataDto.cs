@@ -1,6 +1,6 @@
 ﻿namespace toggl_timer.Services.Api.Model
 {
-    public class UserData
+    public class UserDataDto
     {
         public long id { get; set; }
         public string email { get; set; }

@@ -1,11 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using MetroLog;
-using Prism.Commands;
-using Prism.Windows.Navigation;
+﻿using MetroLog;
 using Prism.Windows.Validation;
 using toggl_timer.Services;
-using toggl_timer.Services.Api;
 using toggl_timer.Services.Api.Model;
+using toggl_timer.Services.Model;
 
 namespace toggl_timer.ViewModels
 {

@@ -23,7 +23,7 @@
                        Text="{Binding Username, Mode=TwoWay}" 
                        Style="{StaticResource GeneralTextBlockStyle}"/>
             <TextBlock x:Name="CurrentDescTextBlock"
-                       Text="{Binding Current.description, Mode=TwoWay}" 
+                       Text="{Binding Current.Description, Mode=TwoWay}" 
                        Style="{StaticResource GeneralTextBlockStyle}"/>
         </StackPanel>
     </Grid>

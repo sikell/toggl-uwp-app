@@ -7,7 +7,7 @@ namespace toggl_timer.Services
     {
         string GetToken();
         bool IsAuthenticated();
-        Task<User> GetUser();
+        Task<UserDto> GetUser();
         Task<bool> AuthUser(string username, string password);
     }
 }

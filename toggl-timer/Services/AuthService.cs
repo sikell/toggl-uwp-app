@@ -27,7 +27,7 @@ namespace toggl_timer.Services
             return _token != null;
         }
 
-        public Task<User> GetUser()
+        public Task<UserDto> GetUser()
         {
             return _apiClient.GetUser(_token);
         }

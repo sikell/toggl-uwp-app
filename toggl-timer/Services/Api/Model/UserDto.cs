@@ -1,8 +1,8 @@
 ﻿namespace toggl_timer.Services.Api.Model
 {
-    public class User
+    public class UserDto
     {
         public long since { get; set; }
-        public UserData data { get; set; }
+        public UserDataDto data { get; set; }
     }
 }

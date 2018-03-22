@@ -97,13 +97,14 @@
     </Compile>
     <Compile Include="Services\Api\ApiClient.cs" />
     <Compile Include="Services\Api\IApiClient.cs" />
-    <Compile Include="Services\Api\Model\TimeEntryWrapper.cs" />
-    <Compile Include="Services\Api\Model\TimeEntry.cs" />
-    <Compile Include="Services\Api\Model\User.cs" />
-    <Compile Include="Services\Api\Model\UserData.cs" />
+    <Compile Include="Services\Api\Model\TimeEntryWrapperDto.cs" />
+    <Compile Include="Services\Api\Model\TimeEntryDto.cs" />
+    <Compile Include="Services\Api\Model\UserDto.cs" />
+    <Compile Include="Services\Api\Model\UserDataDto.cs" />
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="Services\IAuthService.cs" />
     <Compile Include="Services\ITimeEntryService.cs" />
+    <Compile Include="Services\Model\TimeEntry.cs" />
     <Compile Include="Services\TimeEntryService.cs" />
     <Compile Include="ViewModels\LoginPageViewModel.cs" />
     <Compile Include="ViewModels\StartPageViewModel.cs" />

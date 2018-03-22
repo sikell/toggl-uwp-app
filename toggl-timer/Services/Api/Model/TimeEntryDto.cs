@@ -1,6 +1,6 @@
 ﻿namespace toggl_timer.Services.Api.Model
 {
-    public class TimeEntry
+    public class TimeEntryDto
     {
         public long id { get; set; }
         public string gui { get; set; }
