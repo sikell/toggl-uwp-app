@@ -2,6 +2,7 @@
 using MetroLog;
 using toggl_timer.Services.Api;
 using toggl_timer.Services.Api.Model;
+using toggl_timer.Services.Model;
 
 namespace toggl_timer.Services
 {
@@ -27,9 +28,16 @@ namespace toggl_timer.Services
             return _token != null;
         }
 
-        public Task<UserDto> GetUser()
+        public async Task<User> GetUser()
         {
-            return _apiClient.GetUser(_token);
+            var user = await _apiClient.GetUser(_token);
+            return new User()
+            {
+                Id = user.data.id,
+                Email = user.data.email,
+                Fullname = user.data.fullname,
+                ApiToken = user.data.api_token
+            };
         }
 
         public async Task<bool> AuthUser(string username, string password)

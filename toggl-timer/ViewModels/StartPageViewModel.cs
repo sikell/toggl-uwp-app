@@ -9,7 +9,7 @@ namespace toggl_timer.ViewModels
     class StartPageViewModel : ValidatableBindableBase
     {
         private readonly ILogger _log = LogManagerFactory.DefaultLogManager.GetLogger<StartPageViewModel>();
-        private string _username;
+        private User _user;
         private TimeEntry _current;
 
         public StartPageViewModel(IAuthService authService, ITimeEntryService timeEntryService)
@@ -17,10 +17,10 @@ namespace toggl_timer.ViewModels
             Load(authService, timeEntryService);
         }
 
-        public string Username
+        public User User
         {
-            get => _username;
-            set => SetProperty(ref _username, value);
+            get => _user;
+            set => SetProperty(ref _user, value);
         }
 
         public TimeEntry Current
@@ -31,10 +31,8 @@ namespace toggl_timer.ViewModels
 
         private async void Load(IAuthService authService, ITimeEntryService timeEntryService)
         {
-            var user = await authService.GetUser();
-            Username = user.data.fullname;
-            var currentTimeEntry = await timeEntryService.GetCurrent();
-            Current = currentTimeEntry;
+            User = await authService.GetUser();
+            Current = await timeEntryService.GetCurrent();
         }
 
     }

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using toggl_timer.Services.Api.Model;
+using toggl_timer.Services.Model;
 
 namespace toggl_timer.Services
 {
@@ -7,7 +7,7 @@ namespace toggl_timer.Services
     {
         string GetToken();
         bool IsAuthenticated();
-        Task<UserDto> GetUser();
+        Task<User> GetUser();
         Task<bool> AuthUser(string username, string password);
     }
 }

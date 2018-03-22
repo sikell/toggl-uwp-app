@@ -20,7 +20,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel>
             <TextBlock x:Name="UsernameTextBlock"
-                       Text="{Binding Username, Mode=TwoWay}" 
+                       Text="{Binding User.Fullname, Mode=TwoWay}" 
                        Style="{StaticResource GeneralTextBlockStyle}"/>
             <TextBlock x:Name="CurrentDescTextBlock"
                        Text="{Binding Current.Description, Mode=TwoWay}" 
