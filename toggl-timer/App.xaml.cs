@@ -35,6 +35,7 @@ namespace toggl_timer
             base.ConfigureContainer();
             RegisterTypeIfMissing(typeof(IApiClient), typeof(ApiClient), true);
             RegisterTypeIfMissing(typeof(IAuthService), typeof(AuthService), true);
+            RegisterTypeIfMissing(typeof(ITimeEntryService), typeof(TimeEntryService), true);
         }
     }
 }

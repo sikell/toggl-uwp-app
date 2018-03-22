@@ -22,6 +22,9 @@
             <TextBlock x:Name="UsernameTextBlock"
                        Text="{Binding Username, Mode=TwoWay}" 
                        Style="{StaticResource GeneralTextBlockStyle}"/>
+            <TextBlock x:Name="CurrentDescTextBlock"
+                       Text="{Binding Current.description, Mode=TwoWay}" 
+                       Style="{StaticResource GeneralTextBlockStyle}"/>
         </StackPanel>
     </Grid>
 </Page>

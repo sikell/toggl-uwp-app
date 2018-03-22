@@ -5,6 +5,7 @@ using Prism.Windows.Navigation;
 using Prism.Windows.Validation;
 using toggl_timer.Services;
 using toggl_timer.Services.Api;
+using toggl_timer.Services.Api.Model;
 
 namespace toggl_timer.ViewModels
 {
@@ -12,10 +13,11 @@ namespace toggl_timer.ViewModels
     {
         private readonly ILogger _log = LogManagerFactory.DefaultLogManager.GetLogger<StartPageViewModel>();
         private string _username;
+        private TimeEntry _current;
 
-        public StartPageViewModel(IAuthService authService)
+        public StartPageViewModel(IAuthService authService, ITimeEntryService timeEntryService)
         {
-            Load(authService);
+            Load(authService, timeEntryService);
         }
 
         public string Username
@@ -24,10 +26,18 @@ namespace toggl_timer.ViewModels
             set => SetProperty(ref _username, value);
         }
 
-        private async void Load(IAuthService authService)
+        public TimeEntry Current
+        {
+            get => _current;
+            set => SetProperty(ref _current, value);
+        }
+
+        private async void Load(IAuthService authService, ITimeEntryService timeEntryService)
         {
             var user = await authService.GetUser();
             Username = user.data.fullname;
+            var currentTimeEntry = await timeEntryService.GetCurrent();
+            Current = currentTimeEntry;
         }
 
     }

@@ -30,6 +30,31 @@ namespace toggl_timer.Services.Api
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
+        public async Task<TimeEntry> GetCurrentRunning(string apiToken)
+        {
+            var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(apiToken + ":api_token"));
+            const string requestUri = "time_entries/current";
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri(_client.BaseAddress + requestUri),
+                Method = HttpMethod.Get,
+                Headers =
+                {
+                    {HttpRequestHeader.Authorization.ToString(), "Basic " + credentials}
+                }
+            };
+
+            var response = await _client.SendAsync(request);
+            if (!response.IsSuccessStatusCode)
+            {
+                _log.Error("Api access failed! " + response.StatusCode);
+                return null;
+            }
+
+            var readAsStringAsync = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<TimeEntryWrapper>(readAsStringAsync).data;
+        }
+
         public async Task<User> GetUser(string apiToken)
         {
             var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(apiToken + ":api_token"));

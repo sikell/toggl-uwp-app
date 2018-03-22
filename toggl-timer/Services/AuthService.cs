@@ -16,6 +16,11 @@ namespace toggl_timer.Services
             _apiClient = apiClient;
         }
 
+        public string GetToken()
+        {
+            return _token;
+        }
+
         public bool IsAuthenticated()
         {
             // TODO test, if token is valid
