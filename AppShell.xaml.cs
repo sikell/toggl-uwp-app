@@ -1,6 +1,4 @@
-﻿using Boilerplate.Controls;
-using Boilerplate.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.ApplicationModel.Core;
@@ -11,8 +9,12 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using TogglTimer.Controls;
+using BasicPage = TogglTimer.Views.BasicPage;
+using CommandBarPage = TogglTimer.Views.CommandBarPage;
+using DrillInPage = TogglTimer.Views.DrillInPage;
 
-namespace Boilerplate
+namespace TogglTimer
 {
     /// <summary>
     /// The "chrome" layer of the app that provides top-level navigation with
@@ -90,7 +92,7 @@ namespace Boilerplate
             if (!this.isPaddingAdded && sender.IsVisible)
             {
                 //add extra padding between window title bar and app content
-                double extraPadding = (Double)App.Current.Resources["DesktopWindowTopPadding"];
+                double extraPadding = (Double)TogglTimer.App.Current.Resources["DesktopWindowTopPadding"];
                 this.isPaddingAdded = true;
 
                 Thickness margin = NavMenuList.Margin;

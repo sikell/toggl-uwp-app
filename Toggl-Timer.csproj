@@ -6,8 +6,8 @@
     <ProjectGuid>{B08D337A-AF9F-4705-B8C1-C7F07FACD8C5}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Boilerplate</RootNamespace>
-    <AssemblyName>Boilerplate</AssemblyName>
+    <RootNamespace>TogglTimer</RootNamespace>
+    <AssemblyName>Toggl-Timer</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
