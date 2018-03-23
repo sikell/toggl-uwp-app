@@ -446,4 +446,23 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="GeneralTextBoxStyle" TargetType="TextBox">
+        <Setter Property="Margin" Value="0,15,0,0" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Width" Value="300" />
+    </Style>
+    <Style x:Key="GeneralPasswordBoxStyle" TargetType="PasswordBox">
+        <Setter Property="Margin" Value="0,15,0,0" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Width" Value="300" />
+    </Style>
+    <Style x:Key="GeneralButtonStyle" TargetType="Button">
+        <Setter Property="Margin" Value="0,15,0,0" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Width" Value="300" />
+    </Style>
 </ResourceDictionary>

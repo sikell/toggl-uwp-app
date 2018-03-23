@@ -98,6 +98,18 @@
       <DependentUpon>PageHeader.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\NavMenuItem.cs" />
+    <Compile Include="Services\Api\ApiClient.cs" />
+    <Compile Include="Services\Api\IApiClient.cs" />
+    <Compile Include="Services\Api\Model\TimeEntryDto.cs" />
+    <Compile Include="Services\Api\Model\TimeEntryWrapperDto.cs" />
+    <Compile Include="Services\Api\Model\UserDataDto.cs" />
+    <Compile Include="Services\Api\Model\UserDto.cs" />
+    <Compile Include="Services\AuthService.cs" />
+    <Compile Include="Services\IAuthService.cs" />
+    <Compile Include="Services\ITimeEntryService.cs" />
+    <Compile Include="Services\Model\TimeEntry.cs" />
+    <Compile Include="Services\Model\User.cs" />
+    <Compile Include="Services\TimeEntryService.cs" />
     <Compile Include="Views\BasicPage.xaml.cs">
       <DependentUpon>BasicPage.xaml</DependentUpon>
     </Compile>
@@ -169,7 +181,9 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

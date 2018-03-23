@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls1="using:TogglTimer.Controls"
+    xmlns:controls="using:TogglTimer.Controls"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
     mc:Ignorable="d">
 
@@ -37,11 +37,11 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <controls1:PageHeader x:Name="pageHeader">
-            <controls1:PageHeader.HeaderContent>
-                <TextBlock x:Name="title" Style="{StaticResource PageTitleTextBlockStyle}" Text="App Overview"/>
-            </controls1:PageHeader.HeaderContent>
-        </controls1:PageHeader>
+        <controls:PageHeader x:Name="PageHeader">
+            <controls:PageHeader.HeaderContent>
+                <TextBlock x:Name="Title" Style="{StaticResource PageTitleTextBlockStyle}" Text="App Overview"/>
+            </controls:PageHeader.HeaderContent>
+        </controls:PageHeader>
 
         <ScrollViewer Grid.Row="1" EntranceNavigationTransitionInfo.IsTargetElement="True" Margin="12,4,0,0">
             <StackPanel x:Name="ContentContainer" Margin="12,0,24,0">

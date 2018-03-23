@@ -31,7 +31,18 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Your App Content"/>
+        <StackPanel Margin="10">
+            <TextBox x:Name="UsernameTextBox" 
+                     Text="{Binding Username, Mode=TwoWay}" 
+                     Style="{StaticResource GeneralTextBoxStyle}"/>
+            <PasswordBox x:Name="PasswordBox" 
+                         Password="{Binding Password, Mode=TwoWay}"
+                         Style="{StaticResource GeneralPasswordBoxStyle}" />
+            <Button x:Name="SubmitButton" 
+                    Content="Login" 
+                    Command="{Binding LoginCommand}"
+                    Style="{StaticResource GeneralButtonStyle}"/>
+        </StackPanel>
 
     </Grid>
 </Page>

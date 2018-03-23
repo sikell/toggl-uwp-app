@@ -1,25 +1,24 @@
 ﻿using Windows.Foundation;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace TogglTimer.Controls
 {
-    public sealed partial class PageHeader : UserControl
+    public sealed partial class PageHeader
     {
         public PageHeader()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
-            this.Loaded += (s, a) =>
+            Loaded += (s, a) =>
             {
                 AppShell.Current.TogglePaneButtonRectChanged += Current_TogglePaneButtonSizeChanged;
-                this.TitleBar.Margin = new Thickness(AppShell.Current.TogglePaneButtonRect.Right, 0, 0, 0);
+                TitleBar.Margin = new Thickness(AppShell.Current.TogglePaneButtonRect.Right, 0, 0, 0);
             };
         }
 
         private void Current_TogglePaneButtonSizeChanged(AppShell sender, Rect e)
         {
-            this.TitleBar.Margin = new Thickness(e.Right, 0, 0, 0);
+            TitleBar.Margin = new Thickness(e.Right, 0, 0, 0);
         }
 
         public UIElement HeaderContent

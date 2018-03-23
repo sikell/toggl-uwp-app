@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -8,6 +9,9 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Prism.Unity.Windows;
+using TogglTimer.Services;
+using TogglTimer.Services.Api;
 using LandingPage = TogglTimer.Views.LandingPage;
 
 namespace TogglTimer
@@ -15,7 +19,7 @@ namespace TogglTimer
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    sealed partial class App : Application
+    sealed partial class App
     {
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -23,24 +27,47 @@ namespace TogglTimer
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            InitializeComponent();
+            Suspending += OnSuspending;
         }
 
-        /// <summary>
-        /// Invoked when the application is launched normally by the end user.  Other entry points
-        /// will be used such as when the application is launched to open a specific file.
-        /// </summary>
-        /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override UIElement CreateShell(Frame rootFrame)
         {
-#if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached)
+            var shell = Container.TryResolve<AppShell>();
+            shell.AppFrame.Navigate(typeof(LandingPage), null,
+                new Windows.UI.Xaml.Media.Animation.SuppressNavigationTransitionInfo());
+            // Handle navigation events
+            shell.AppFrame.NavigationFailed += OnNavigationFailed;
+            shell.AppFrame.Navigated += OnNavigated;
+
+            /*if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
             {
-                // This just gets in the way.
-                //this.DebugSettings.EnableFrameRateCounter = true;
+                //TODO: Load state from previously suspended application
+            }*/
+
+            // Place our app shell in the current Window
+            Window.Current.Content = shell;
+
+            // Register a handler for BackRequested events
+            SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
+
+            // Set visibility of the Back button
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                shell.AppFrame.CanGoBack
+                    ? AppViewBackButtonVisibility.Visible
+                    : AppViewBackButtonVisibility.Collapsed;
+            if (shell.AppFrame.Content == null)
+            {
+                // When the navigation stack isn't restored, navigate to the first page, suppressing the initial entrance animation.
+                shell.AppFrame.Navigate(typeof(LandingPage), null,
+                    new Windows.UI.Xaml.Media.Animation.SuppressNavigationTransitionInfo());
             }
-#endif
+
+            return shell;
+        }
+
+        protected override Task OnLaunchApplicationAsync(LaunchActivatedEventArgs args)
+        {
             // Change minimum window size
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(320, 200));
 
@@ -48,54 +75,24 @@ namespace TogglTimer
             ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
             if (titleBar != null)
             {
-                var titleBarColor = (Color) App.Current.Resources["SystemChromeMediumColor"];
+                var titleBarColor = (Color) Current.Resources["SystemChromeMediumColor"];
                 titleBar.BackgroundColor = titleBarColor;
                 titleBar.ButtonBackgroundColor = titleBarColor;
             }
 
-            var shell = Window.Current.Content as AppShell;
-
-            // Do not repeat app initialization when the Window already has content,
-            // just ensure that the window is active
-            if (shell == null)
-            {
-                // Create a AppShell to act as the navigation context and navigate to the first page
-                shell = new AppShell {Language = Windows.Globalization.ApplicationLanguages.Languages[0]};
-
-                // Set the default language
-
-                // Handle navigation events
-                shell.AppFrame.NavigationFailed += OnNavigationFailed;
-                shell.AppFrame.Navigated += OnNavigated;
-
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    //TODO: Load state from previously suspended application
-                }
-
-                // Place our app shell in the current Window
-                Window.Current.Content = shell;
-
-                // Register a handler for BackRequested events
-                SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
-
-                // Set visibility of the Back button
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                    shell.AppFrame.CanGoBack
-                        ? AppViewBackButtonVisibility.Visible
-                        : AppViewBackButtonVisibility.Collapsed;
-            }
-
-            if (shell.AppFrame.Content == null)
-            {
-                // When the navigation stack isn't restored, navigate to the first page, suppressing the initial entrance animation.
-                shell.AppFrame.Navigate(typeof(LandingPage), e.Arguments,
-                    new Windows.UI.Xaml.Media.Animation.SuppressNavigationTransitionInfo());
-            }
-
             // Ensure the current window is active
             Window.Current.Activate();
+            return Task.FromResult(true);
         }
+
+        protected override void ConfigureContainer()
+        {
+            base.ConfigureContainer();
+            RegisterTypeIfMissing(typeof(IApiClient), typeof(ApiClient), true);
+            RegisterTypeIfMissing(typeof(IAuthService), typeof(AuthService), true);
+            RegisterTypeIfMissing(typeof(ITimeEntryService), typeof(TimeEntryService), true);
+        }
+
 
         /// <summary>
         /// Invoked when Navigation to a certain page fails
