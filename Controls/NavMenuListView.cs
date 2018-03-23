@@ -25,16 +25,16 @@ namespace TogglTimer.Controls
     /// </remarks>
     public class NavMenuListView : ListView
     {
-        private SplitView splitViewHost;
+        private SplitView _splitViewHost;
 
         public NavMenuListView()
         {
-            this.SelectionMode = ListViewSelectionMode.Single;
-            this.IsItemClickEnabled = true;
-            this.ItemClick += ItemClickedHandler;
+            SelectionMode = ListViewSelectionMode.Single;
+            IsItemClickEnabled = true;
+            ItemClick += ItemClickedHandler;
 
             // Locate the hosting SplitView control
-            this.Loaded += (s, a) =>
+            Loaded += (s, a) =>
             {
                 var parent = VisualTreeHelper.GetParent(this);
                 while (parent != null && !(parent is SplitView))
@@ -44,14 +44,12 @@ namespace TogglTimer.Controls
 
                 if (parent == null) return;
 
-                this.splitViewHost = parent as SplitView;
-                splitViewHost.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (sender, args) =>
-                {
-                    this.OnPaneToggled();
-                });
+                _splitViewHost = parent as SplitView;
+                _splitViewHost.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty,
+                    (sender, args) => { OnPaneToggled(); });
 
                 // Call once to ensure we're in the correct state
-                this.OnPaneToggled();
+                OnPaneToggled();
             };
         }
 
@@ -60,11 +58,11 @@ namespace TogglTimer.Controls
             base.OnApplyTemplate();
 
             // Remove the entrance animation on the item containers.
-            for (int i = 0; i < this.ItemContainerTransitions.Count; i++)
+            for (var i = 0; i < ItemContainerTransitions.Count; i++)
             {
-                if (this.ItemContainerTransitions[i] is EntranceThemeTransition)
+                if (ItemContainerTransitions[i] is EntranceThemeTransition)
                 {
-                    this.ItemContainerTransitions.RemoveAt(i);
+                    ItemContainerTransitions.RemoveAt(i);
                 }
             }
         }
@@ -76,15 +74,15 @@ namespace TogglTimer.Controls
         /// <param name="item"></param>
         public void SetSelectedItem(ListViewItem item)
         {
-            int index = -1;
+            var index = -1;
             if (item != null)
             {
-                index = this.IndexFromContainer(item);
+                index = IndexFromContainer(item);
             }
 
-            for (int i = 0; i < this.Items.Count; i++)
+            for (var i = 0; i < Items.Count; i++)
             {
-                var lvi = (ListViewItem)this.ContainerFromIndex(i);
+                var lvi = (ListViewItem) ContainerFromIndex(i);
                 if (i != index)
                 {
                     lvi.IsSelected = false;
@@ -108,7 +106,7 @@ namespace TogglTimer.Controls
         /// <param name="e"></param>
         protected override void OnKeyDown(KeyRoutedEventArgs e)
         {
-        var focusedItem = FocusManager.GetFocusedElement();
+            var focusedItem = FocusManager.GetFocusedElement();
 
             switch (e.Key)
             {
@@ -123,23 +121,25 @@ namespace TogglTimer.Controls
                     break;
 
                 case VirtualKey.Tab:
-                    CoreVirtualKeyStates shiftKeyState = CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Shift);
-                    bool shiftKeyDown = (shiftKeyState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
+                    var shiftKeyState = CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Shift);
+                    var shiftKeyDown = (shiftKeyState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
 
                     // If we're on the header item then this will be null and we'll still get the default behavior.
-                    if (focusedItem is ListViewItem)
+                    if (focusedItem is ListViewItem currentItem)
                     {
-                        var currentItem = (ListViewItem)focusedItem;
-                        bool onlastitem = currentItem != null && this.IndexFromContainer(currentItem) == this.Items.Count - 1;
-                        bool onfirstitem = currentItem != null && this.IndexFromContainer(currentItem) == 0;
+                        bool onlastitem = this.IndexFromContainer(currentItem) == Items.Count - 1;
+                        bool onfirstitem = this.IndexFromContainer(currentItem) == 0;
 
                         if (!shiftKeyDown)
                         {
-                            this.TryMoveFocus(onlastitem ? FocusNavigationDirection.Next : FocusNavigationDirection.Down);
+                            this.TryMoveFocus(
+                                onlastitem ? FocusNavigationDirection.Next : FocusNavigationDirection.Down);
                         }
                         else // Shift + Tab
                         {
-                            this.TryMoveFocus(onfirstitem ? FocusNavigationDirection.Previous : FocusNavigationDirection.Up);
+                            this.TryMoveFocus(onfirstitem
+                                ? FocusNavigationDirection.Previous
+                                : FocusNavigationDirection.Up);
                         }
                     }
                     else if (focusedItem is Control)
@@ -183,10 +183,7 @@ namespace TogglTimer.Controls
             else
             {
                 var control = FocusManager.FindNextFocusableElement(direction) as Control;
-                if (control != null)
-                {
-                    control.Focus(FocusState.Programmatic);
-                }
+                control?.Focus(FocusState.Programmatic);
             }
         }
 
@@ -199,17 +196,17 @@ namespace TogglTimer.Controls
 
         private void InvokeItem(object focusedItem)
         {
-            this.SetSelectedItem(focusedItem as ListViewItem);
-            this.ItemInvoked(this, focusedItem as ListViewItem);
+            SetSelectedItem(focusedItem as ListViewItem);
+            ItemInvoked(this, focusedItem as ListViewItem);
 
-            if (this.splitViewHost.IsPaneOpen && (
-                this.splitViewHost.DisplayMode == SplitViewDisplayMode.CompactOverlay ||
-                this.splitViewHost.DisplayMode == SplitViewDisplayMode.Overlay))
+            if (this._splitViewHost.IsPaneOpen && (
+                    this._splitViewHost.DisplayMode == SplitViewDisplayMode.CompactOverlay ||
+                    this._splitViewHost.DisplayMode == SplitViewDisplayMode.Overlay))
             {
-                this.splitViewHost.IsPaneOpen = false;
+                this._splitViewHost.IsPaneOpen = false;
                 if (focusedItem is ListViewItem)
                 {
-                    ((ListViewItem)focusedItem).Focus(FocusState.Programmatic);
+                    ((ListViewItem) focusedItem).Focus(FocusState.Programmatic);
                 }
             }
         }
@@ -220,16 +217,16 @@ namespace TogglTimer.Controls
         /// </summary>
         private void OnPaneToggled()
         {
-            if (this.splitViewHost.IsPaneOpen)
+            if (_splitViewHost.IsPaneOpen)
             {
-                this.ItemsPanelRoot.ClearValue(FrameworkElement.WidthProperty);
-                this.ItemsPanelRoot.ClearValue(FrameworkElement.HorizontalAlignmentProperty);
+                ItemsPanelRoot.ClearValue(FrameworkElement.WidthProperty);
+                ItemsPanelRoot.ClearValue(FrameworkElement.HorizontalAlignmentProperty);
             }
-            else if (this.splitViewHost.DisplayMode == SplitViewDisplayMode.CompactInline ||
-                this.splitViewHost.DisplayMode == SplitViewDisplayMode.CompactOverlay)
+            else if (this._splitViewHost.DisplayMode == SplitViewDisplayMode.CompactInline ||
+                     this._splitViewHost.DisplayMode == SplitViewDisplayMode.CompactOverlay)
             {
-                this.ItemsPanelRoot.SetValue(FrameworkElement.WidthProperty, this.splitViewHost.CompactPaneLength);
-                this.ItemsPanelRoot.SetValue(FrameworkElement.HorizontalAlignmentProperty, HorizontalAlignment.Left);
+                ItemsPanelRoot.SetValue(FrameworkElement.WidthProperty, this._splitViewHost.CompactPaneLength);
+                ItemsPanelRoot.SetValue(FrameworkElement.HorizontalAlignmentProperty, HorizontalAlignment.Left);
             }
         }
     }

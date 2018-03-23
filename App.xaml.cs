@@ -10,8 +10,6 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using LandingPage = TogglTimer.Views.LandingPage;
 
-// The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=402347&clcid=0x409
-
 namespace TogglTimer
 {
     /// <summary>
@@ -36,7 +34,6 @@ namespace TogglTimer
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
@@ -51,7 +48,7 @@ namespace TogglTimer
             ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
             if (titleBar != null)
             {
-                var titleBarColor = (Color)App.Current.Resources["SystemChromeMediumColor"];
+                var titleBarColor = (Color) App.Current.Resources["SystemChromeMediumColor"];
                 titleBar.BackgroundColor = titleBarColor;
                 titleBar.ButtonBackgroundColor = titleBarColor;
             }
@@ -63,10 +60,9 @@ namespace TogglTimer
             if (shell == null)
             {
                 // Create a AppShell to act as the navigation context and navigate to the first page
-                shell = new AppShell();
+                shell = new AppShell {Language = Windows.Globalization.ApplicationLanguages.Languages[0]};
 
                 // Set the default language
-                shell.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
 
                 // Handle navigation events
                 shell.AppFrame.NavigationFailed += OnNavigationFailed;
@@ -85,15 +81,16 @@ namespace TogglTimer
 
                 // Set visibility of the Back button
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                    shell.AppFrame.CanGoBack ?
-                    AppViewBackButtonVisibility.Visible :
-                    AppViewBackButtonVisibility.Collapsed;
+                    shell.AppFrame.CanGoBack
+                        ? AppViewBackButtonVisibility.Visible
+                        : AppViewBackButtonVisibility.Collapsed;
             }
 
             if (shell.AppFrame.Content == null)
             {
                 // When the navigation stack isn't restored, navigate to the first page, suppressing the initial entrance animation.
-                shell.AppFrame.Navigate(typeof(LandingPage), e.Arguments, new Windows.UI.Xaml.Media.Animation.SuppressNavigationTransitionInfo());
+                shell.AppFrame.Navigate(typeof(LandingPage), e.Arguments,
+                    new Windows.UI.Xaml.Media.Animation.SuppressNavigationTransitionInfo());
             }
 
             // Ensure the current window is active
@@ -119,9 +116,9 @@ namespace TogglTimer
         {
             // Update Back button visibility
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                ((Frame)sender).CanGoBack ?
-                AppViewBackButtonVisibility.Visible :
-                AppViewBackButtonVisibility.Collapsed;
+                ((Frame) sender).CanGoBack
+                    ? AppViewBackButtonVisibility.Visible
+                    : AppViewBackButtonVisibility.Collapsed;
         }
 
         /// <summary>
@@ -146,8 +143,8 @@ namespace TogglTimer
         private static void OnBackRequested(object sender, BackRequestedEventArgs e)
         {
             // Go back if possible
-            var shell = Window.Current.Content as AppShell;
-            if (shell == null || !shell.AppFrame.CanGoBack) return;
+            if (!(Window.Current.Content is AppShell shell) || !shell.AppFrame.CanGoBack)
+                return;
             e.Handled = true;
             shell.AppFrame.GoBack();
         }

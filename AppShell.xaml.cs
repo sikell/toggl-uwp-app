@@ -22,9 +22,10 @@ namespace TogglTimer
     /// </summary>
     public sealed partial class AppShell : Page
     {
-        private bool isPaddingAdded = false;
+        private bool _isPaddingAdded = false;
+
         // Declare top level nav items
-        private readonly List<NavMenuItem> navlist = new List<NavMenuItem>(
+        private readonly List<NavMenuItem> _navlist = new List<NavMenuItem>(
             new[]
             {
                 new NavMenuItem()
@@ -76,7 +77,7 @@ namespace TogglTimer
                 });
 
             // Add items to navigation menu
-            NavMenuList.ItemsSource = navlist;
+            NavMenuList.ItemsSource = _navlist;
         }
 
         public Frame AppFrame => this.frame;
@@ -89,11 +90,11 @@ namespace TogglTimer
         /// <param name="args"></param>
         private void TitleBar_IsVisibleChanged(Windows.ApplicationModel.Core.CoreApplicationViewTitleBar sender, object args)
         {
-            if (!this.isPaddingAdded && sender.IsVisible)
+            if (!this._isPaddingAdded && sender.IsVisible)
             {
                 //add extra padding between window title bar and app content
                 double extraPadding = (Double)TogglTimer.App.Current.Resources["DesktopWindowTopPadding"];
-                this.isPaddingAdded = true;
+                this._isPaddingAdded = true;
 
                 Thickness margin = NavMenuList.Margin;
                 NavMenuList.Margin = new Thickness(margin.Left, margin.Top + extraPadding, margin.Right, margin.Bottom);
@@ -181,14 +182,14 @@ namespace TogglTimer
         {
             if (e.NavigationMode == NavigationMode.Back)
             {
-                var item = (from p in this.navlist where p.DestPage == e.SourcePageType select p).SingleOrDefault();
+                var item = (from p in this._navlist where p.DestPage == e.SourcePageType select p).SingleOrDefault();
                 if (item == null && this.AppFrame.BackStackDepth > 0)
                 {
                     // In cases where a page drills into sub-pages then we'll highlight the most recent
                     // navigation menu item that appears in the BackStack
                     foreach (var entry in this.AppFrame.BackStack.Reverse())
                     {
-                        item = (from p in this.navlist where p.DestPage == entry.SourcePageType select p).SingleOrDefault();
+                        item = (from p in this._navlist where p.DestPage == entry.SourcePageType select p).SingleOrDefault();
                         if (item != null)
                             break;
                     }
