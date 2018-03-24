@@ -183,31 +183,28 @@ namespace TogglTimer
         /// <param name="e"></param>
         private void OnNavigatingToPage(object sender, NavigatingCancelEventArgs e)
         {
-            if (e.NavigationMode == NavigationMode.Back)
+            var item = (from p in this._navlist where p.DestPage == e.SourcePageType select p).SingleOrDefault();
+            if (item == null && this.AppFrame.BackStackDepth > 0)
             {
-                var item = (from p in this._navlist where p.DestPage == e.SourcePageType select p).SingleOrDefault();
-                if (item == null && this.AppFrame.BackStackDepth > 0)
+                // In cases where a page drills into sub-pages then we'll highlight the most recent
+                // navigation menu item that appears in the BackStack
+                foreach (var entry in this.AppFrame.BackStack.Reverse())
                 {
-                    // In cases where a page drills into sub-pages then we'll highlight the most recent
-                    // navigation menu item that appears in the BackStack
-                    foreach (var entry in this.AppFrame.BackStack.Reverse())
-                    {
-                        item = (from p in this._navlist where p.DestPage == entry.SourcePageType select p)
-                            .SingleOrDefault();
-                        if (item != null)
-                            break;
-                    }
+                    item = (from p in this._navlist where p.DestPage == entry.SourcePageType select p)
+                        .SingleOrDefault();
+                    if (item != null)
+                        break;
                 }
-
-                var container = (ListViewItem) NavMenuList.ContainerFromItem(item);
-
-                // While updating the selection state of the item prevent it from taking keyboard focus.  If a
-                // user is invoking the back button via the keyboard causing the selected nav menu item to change
-                // then focus will remain on the back button.
-                if (container != null) container.IsTabStop = false;
-                NavMenuList.SetSelectedItem(container);
-                if (container != null) container.IsTabStop = true;
             }
+
+            var container = (ListViewItem) NavMenuList.ContainerFromItem(item);
+
+            // While updating the selection state of the item prevent it from taking keyboard focus.  If a
+            // user is invoking the back button via the keyboard causing the selected nav menu item to change
+            // then focus will remain on the back button.
+            if (container != null) container.IsTabStop = false;
+            NavMenuList.SetSelectedItem(container);
+            if (container != null) container.IsTabStop = true;
         }
 
         private void OnNavigatedToPage(object sender, NavigationEventArgs e)

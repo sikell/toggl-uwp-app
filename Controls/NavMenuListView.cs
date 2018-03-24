@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
+using MetroLog;
 
 namespace TogglTimer.Controls
 {
@@ -25,6 +26,7 @@ namespace TogglTimer.Controls
     /// </remarks>
     public class NavMenuListView : ListView
     {
+        private readonly ILogger _log = LogManagerFactory.DefaultLogManager.GetLogger<NavMenuListView>();
         private SplitView _splitViewHost;
 
         public NavMenuListView()
@@ -83,6 +85,11 @@ namespace TogglTimer.Controls
             for (var i = 0; i < Items.Count; i++)
             {
                 var lvi = (ListViewItem) ContainerFromIndex(i);
+                if (lvi == null)
+                {
+                    _log.Info("NavMenu lvi is null");
+                    return;
+                }
                 if (i != index)
                 {
                     lvi.IsSelected = false;
