@@ -110,9 +110,9 @@
     <Compile Include="Services\Model\TimeEntry.cs" />
     <Compile Include="Services\Model\User.cs" />
     <Compile Include="Services\TimeEntryService.cs" />
-    <Compile Include="ViewModels\BasicPageViewModel.cs" />
-    <Compile Include="Views\BasicPage.xaml.cs">
-      <DependentUpon>BasicPage.xaml</DependentUpon>
+    <Compile Include="ViewModels\LoginPageViewModel.cs" />
+    <Compile Include="Views\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppShell.xaml.cs">
       <DependentUpon>AppShell.xaml</DependentUpon>
@@ -157,7 +157,7 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Views\BasicPage.xaml">
+    <Page Include="Views\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

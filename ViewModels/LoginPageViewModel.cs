@@ -11,16 +11,16 @@ using TogglTimer.Views;
 
 namespace TogglTimer.ViewModels
 {
-    public class BasicPageViewModel : ValidatableBindableBase, INavigationAware
+    public class LoginPageViewModel : ValidatableBindableBase
     {
-        private readonly ILogger _log = LogManagerFactory.DefaultLogManager.GetLogger<BasicPageViewModel>();
+        private readonly ILogger _log = LogManagerFactory.DefaultLogManager.GetLogger<LoginPageViewModel>();
 
         private string _username;
         private string _password;
 
         private readonly IAuthService _authService;
         
-        public BasicPageViewModel(IAuthService authService)
+        public LoginPageViewModel(IAuthService authService)
         {
             _authService = authService;
 
@@ -57,20 +57,5 @@ namespace TogglTimer.ViewModels
 
         public DelegateCommand LoginCommand { get; }
 
-        public void OnNavigatedTo(NavigatedToEventArgs e, Dictionary<string, object> viewModelState)
-        {
-            _log.Info("Navigated to login page");
-            if (_authService.IsAuthenticated())
-            {
-                _log.Info("User is authenticated navigate to start.");
-                // TODO redirect
-            }
-        }
-
-        public void OnNavigatingFrom(NavigatingFromEventArgs e, Dictionary<string, object> viewModelState,
-            bool suspending)
-        {
-            _log.Info("Leave login page");
-        }
     }
 }

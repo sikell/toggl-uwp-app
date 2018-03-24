@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using TogglTimer.Controls;
-using BasicPage = TogglTimer.Views.BasicPage;
+using TogglTimer.Views;
 using CommandBarPage = TogglTimer.Views.CommandBarPage;
 using DrillInPage = TogglTimer.Views.DrillInPage;
 
@@ -32,7 +32,7 @@ namespace TogglTimer
                 {
                     Symbol = Symbol.Contact,
                     Label = "Basic Page",
-                    DestPage = typeof(BasicPage)
+                    DestPage = typeof(LoginPage)
                 },
                 new NavMenuItem()
                 {

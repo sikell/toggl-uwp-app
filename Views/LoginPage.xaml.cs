@@ -7,13 +7,13 @@ using TogglTimer.ViewModels;
 
 namespace TogglTimer.Views
 {
-    public sealed partial class BasicPage : Page
+    public sealed partial class LoginPage : Page
     {
-        public BasicPage()
+        public LoginPage()
         {
             this.InitializeComponent();
             var unityContainer = (UnityContainer) Application.Current.Resources["IoC"];
-            var viewModel = (BasicPageViewModel) DataContext;
+            var viewModel = (LoginPageViewModel) DataContext;
             viewModel.NavigateToPage += ViewModel_NavigateToPage;
         }
 
