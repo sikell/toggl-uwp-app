@@ -9,7 +9,9 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Practices.Unity;
 using Prism.Unity.Windows;
+using Prism.Windows.Navigation;
 using TogglTimer.Services;
 using TogglTimer.Services.Api;
 using LandingPage = TogglTimer.Views.LandingPage;
@@ -62,7 +64,7 @@ namespace TogglTimer
                 shell.AppFrame.Navigate(typeof(LandingPage), null,
                     new Windows.UI.Xaml.Media.Animation.SuppressNavigationTransitionInfo());
             }
-
+            
             return shell;
         }
 
@@ -91,8 +93,8 @@ namespace TogglTimer
             RegisterTypeIfMissing(typeof(IApiClient), typeof(ApiClient), true);
             RegisterTypeIfMissing(typeof(IAuthService), typeof(AuthService), true);
             RegisterTypeIfMissing(typeof(ITimeEntryService), typeof(TimeEntryService), true);
+            Application.Current.Resources.Add("IoC", this.Container);
         }
-
 
         /// <summary>
         /// Invoked when Navigation to a certain page fails

@@ -4,8 +4,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:controls="using:Boilerplate.Controls" 
-      xmlns:controls1="using:TogglTimer.Controls"
+      xmlns:controls="using:TogglTimer.Controls"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       KeyDown="AppShell_KeyDown"
       TabNavigation="Cycle"
@@ -18,7 +17,7 @@
     -->
 
     <Page.Resources>
-        <DataTemplate x:Key="NavMenuItemTemplate" x:DataType="controls1:NavMenuItem">
+        <DataTemplate x:Key="NavMenuItemTemplate" x:DataType="controls:NavMenuItem">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="48" />
@@ -92,7 +91,7 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- A custom ListView to display the items in the pane.  The automation Name is set in the ContainerContentChanging event. -->
-                    <controls1:NavMenuListView x:Name="NavMenuList"
+                    <controls:NavMenuListView x:Name="NavMenuList"
                                           Grid.ColumnSpan="3"
                                           TabIndex="3"
                                           Margin="0,52,0,0"

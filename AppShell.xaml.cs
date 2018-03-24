@@ -64,7 +64,8 @@ namespace TogglTimer
 
                 this.CheckTogglePaneButtonSizeChanged();
 
-                CoreApplicationViewTitleBar titleBar = Windows.ApplicationModel.Core.CoreApplication.GetCurrentView().TitleBar;
+                CoreApplicationViewTitleBar titleBar =
+                    Windows.ApplicationModel.Core.CoreApplication.GetCurrentView().TitleBar;
                 titleBar.IsVisibleChanged += TitleBar_IsVisibleChanged;
             };
 
@@ -88,12 +89,13 @@ namespace TogglTimer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void TitleBar_IsVisibleChanged(Windows.ApplicationModel.Core.CoreApplicationViewTitleBar sender, object args)
+        private void TitleBar_IsVisibleChanged(Windows.ApplicationModel.Core.CoreApplicationViewTitleBar sender,
+            object args)
         {
             if (!this._isPaddingAdded && sender.IsVisible)
             {
                 //add extra padding between window title bar and app content
-                double extraPadding = (Double)TogglTimer.App.Current.Resources["DesktopWindowTopPadding"];
+                double extraPadding = (Double) TogglTimer.App.Current.Resources["DesktopWindowTopPadding"];
                 this._isPaddingAdded = true;
 
                 Thickness margin = NavMenuList.Margin;
@@ -101,7 +103,8 @@ namespace TogglTimer
                 margin = frame.Margin;
                 frame.Margin = new Thickness(margin.Left, margin.Top + extraPadding, margin.Right, margin.Bottom);
                 margin = TogglePaneButton.Margin;
-                TogglePaneButton.Margin = new Thickness(margin.Left, margin.Top + extraPadding, margin.Right, margin.Bottom);
+                TogglePaneButton.Margin =
+                    new Thickness(margin.Left, margin.Top + extraPadding, margin.Right, margin.Bottom);
             }
         }
 
@@ -160,7 +163,7 @@ namespace TogglTimer
         /// <param name="listViewItem"></param>
         private void NavMenuList_ItemInvoked(object sender, ListViewItem listViewItem)
         {
-            var item = (NavMenuItem)((NavMenuListView)sender).ItemFromContainer(listViewItem);
+            var item = (NavMenuItem) ((NavMenuListView) sender).ItemFromContainer(listViewItem);
 
             if (item != null)
             {
@@ -189,13 +192,14 @@ namespace TogglTimer
                     // navigation menu item that appears in the BackStack
                     foreach (var entry in this.AppFrame.BackStack.Reverse())
                     {
-                        item = (from p in this._navlist where p.DestPage == entry.SourcePageType select p).SingleOrDefault();
+                        item = (from p in this._navlist where p.DestPage == entry.SourcePageType select p)
+                            .SingleOrDefault();
                         if (item != null)
                             break;
                     }
                 }
 
-                var container = (ListViewItem)NavMenuList.ContainerFromItem(item);
+                var container = (ListViewItem) NavMenuList.ContainerFromItem(item);
 
                 // While updating the selection state of the item prevent it from taking keyboard focus.  If a
                 // user is invoking the back button via the keyboard causing the selected nav menu item to change
@@ -211,24 +215,20 @@ namespace TogglTimer
             // After a successful navigation set keyboard focus to the loaded page
             if (e.Content is Page && e.Content != null)
             {
-                var control = (Page)e.Content;
+                var control = (Page) e.Content;
                 control.Loaded += Page_Loaded;
             }
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            ((Page)sender).Focus(FocusState.Programmatic);
-            ((Page)sender).Loaded -= Page_Loaded;
+            ((Page) sender).Focus(FocusState.Programmatic);
+            ((Page) sender).Loaded -= Page_Loaded;
         }
 
         #endregion
 
-        public Rect TogglePaneButtonRect
-        {
-            get;
-            private set;
-        }
+        public Rect TogglePaneButtonRect { get; private set; }
 
         /// <summary>
         /// An event to notify listeners when the hamburger button may occlude other content in the app.
@@ -289,7 +289,8 @@ namespace TogglTimer
                 this.RootSplitView.DisplayMode == SplitViewDisplayMode.Overlay)
             {
                 GeneralTransform transform = this.TogglePaneButton.TransformToVisual(this);
-                Rect rect = transform.TransformBounds(new Rect(0, 0, this.TogglePaneButton.ActualWidth, this.TogglePaneButton.ActualHeight));
+                Rect rect = transform.TransformBounds(new Rect(0, 0, this.TogglePaneButton.ActualWidth,
+                    this.TogglePaneButton.ActualHeight));
                 this.TogglePaneButtonRect = rect;
             }
             else
@@ -311,7 +312,7 @@ namespace TogglTimer
         {
             if (!args.InRecycleQueue && args.Item != null && args.Item is NavMenuItem)
             {
-                args.ItemContainer.SetValue(AutomationProperties.NameProperty, ((NavMenuItem)args.Item).Label);
+                args.ItemContainer.SetValue(AutomationProperties.NameProperty, ((NavMenuItem) args.Item).Label);
             }
             else
             {

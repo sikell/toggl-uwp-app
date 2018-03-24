@@ -110,6 +110,7 @@
     <Compile Include="Services\Model\TimeEntry.cs" />
     <Compile Include="Services\Model\User.cs" />
     <Compile Include="Services\TimeEntryService.cs" />
+    <Compile Include="ViewModels\BasicPageViewModel.cs" />
     <Compile Include="Views\BasicPage.xaml.cs">
       <DependentUpon>BasicPage.xaml</DependentUpon>
     </Compile>
@@ -181,9 +182,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
