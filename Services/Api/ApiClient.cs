@@ -32,7 +32,7 @@ namespace TogglTimer.Services.Api
 
         public async Task<TimeEntryDto> GetCurrentRunning(string apiToken)
         {
-            return await DoGet<TimeEntryDto>("time_entries/current", ToBasicAuth(apiToken));
+            return (await DoGet<TimeEntryWrapperDto>("time_entries/current", ToBasicAuth(apiToken))).data;
         }
 
         public async Task<UserDto> GetUser(string apiToken)
