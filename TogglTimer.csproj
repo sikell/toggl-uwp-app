@@ -18,7 +18,7 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <AppxBundlePlatforms>arm</AppxBundlePlatforms>
     <PackageCertificateThumbprint>8E71A202941F585E467AB7A72FE872C0DA10BFF9</PackageCertificateThumbprint>
     <PackageCertificateKeyFile>TogglTimer_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
@@ -145,7 +145,22 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\smalltile-sdk.altform-unplated_targetsize-16.png" />
+    <Content Include="Assets\smalltile-sdk.altform-unplated_targetsize-24.png" />
+    <Content Include="Assets\smalltile-sdk.altform-unplated_targetsize-256.png" />
+    <Content Include="Assets\smalltile-sdk.altform-unplated_targetsize-32.png" />
+    <Content Include="Assets\smalltile-sdk.altform-unplated_targetsize-48.png" />
     <Content Include="Assets\smalltile-sdk.png" />
+    <Content Include="Assets\smalltile-sdk.scale-100.png" />
+    <Content Include="Assets\smalltile-sdk.scale-125.png" />
+    <Content Include="Assets\smalltile-sdk.scale-150.png" />
+    <Content Include="Assets\smalltile-sdk.scale-200.png" />
+    <Content Include="Assets\smalltile-sdk.scale-400.png" />
+    <Content Include="Assets\smalltile-sdk.targetsize-16.png" />
+    <Content Include="Assets\smalltile-sdk.targetsize-24.png" />
+    <Content Include="Assets\smalltile-sdk.targetsize-256.png" />
+    <Content Include="Assets\smalltile-sdk.targetsize-32.png" />
+    <Content Include="Assets\smalltile-sdk.targetsize-48.png" />
     <Content Include="Assets\splash-sdk.scale-100.png" />
     <Content Include="Assets\splash-sdk.scale-125.png" />
     <Content Include="Assets\splash-sdk.scale-150.png" />
