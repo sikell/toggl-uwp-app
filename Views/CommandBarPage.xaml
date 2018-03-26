@@ -4,8 +4,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls1="using:TogglTimer.Controls"
+    xmlns:controls="using:TogglTimer.Controls"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <Style x:Key="GeneralTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0,15,0,0" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Width" Value="300" />
+        </Style>
+    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
@@ -38,7 +47,7 @@
             <RowDefinition />
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <CommandBar x:Name="topbar" Visibility="Collapsed" HorizontalContentAlignment="Stretch" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <CommandBar x:Name="Topbar" Visibility="Collapsed" HorizontalContentAlignment="Stretch" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <AppBarButton Icon="Edit" Label="Edit"/>
             <AppBarButton Icon="Delete" Label="Delete"/>
             <AppBarSeparator/>
@@ -49,25 +58,33 @@
                 <AppBarButton Label="Menu Item 3"/>
             </CommandBar.SecondaryCommands>
             <CommandBar.Content>
-                <controls1:PageHeader>
-                    <controls1:PageHeader.HeaderContent>
+                <controls:PageHeader>
+                    <controls:PageHeader.HeaderContent>
                         <TextBlock x:Name="HeaderTextBlock" Text="CommandBar Page" Style="{StaticResource PageTitleTextBlockStyle}"/>
-                    </controls1:PageHeader.HeaderContent>
-                </controls1:PageHeader>
+                    </controls:PageHeader.HeaderContent>
+                </controls:PageHeader>
             </CommandBar.Content>
         </CommandBar>
 
-        <controls1:PageHeader x:Name="pageTitleContainer" Visibility="Collapsed">
-            <controls1:PageHeader.HeaderContent>
+        <controls:PageHeader x:Name="PageTitleContainer" Visibility="Collapsed">
+            <controls:PageHeader.HeaderContent>
                 <TextBlock x:Name="AltHeaderTextBlock" Text="Commandbar Page" Style="{StaticResource PageTitleTextBlockStyle}"/>
-            </controls1:PageHeader.HeaderContent>
-        </controls1:PageHeader>
+            </controls:PageHeader.HeaderContent>
+        </controls:PageHeader>
 
         <Grid x:Name="ContentContainer" Grid.Row="1" EntranceNavigationTransitionInfo.IsTargetElement="True" Margin="24,0">
+            <StackPanel>
+                <TextBlock x:Name="UsernameTextBlock"
+                           Text="{Binding User.Fullname, Mode=TwoWay}" 
+                           Style="{StaticResource GeneralTextBlockStyle}"/>
+                <TextBlock x:Name="CurrentDescTextBlock"
+                           Text="{Binding Current.Description, Mode=TwoWay}" 
+                           Style="{StaticResource GeneralTextBlockStyle}"/>
+            </StackPanel>
             <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Your App Content"/>
         </Grid>
 
-        <CommandBar x:Name="bottombar" Grid.Row="2" Visibility="Collapsed" HorizontalContentAlignment="Stretch" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <CommandBar x:Name="Bottombar" Grid.Row="2" Visibility="Collapsed" HorizontalContentAlignment="Stretch" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <AppBarButton Icon="Edit" Label="Edit"/>
             <AppBarButton Icon="Delete" Label="Delete"/>
             <AppBarSeparator/>
@@ -80,6 +97,18 @@
         </CommandBar>
     </Grid>
 </Page>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

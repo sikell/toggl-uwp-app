@@ -19,15 +19,15 @@ namespace TogglTimer.Views
             //move commandbar to page bottom on small screens
             if (diagonal < 7)
             {
-                topbar.Visibility = Visibility.Collapsed;
-                pageTitleContainer.Visibility = Visibility.Visible;
-                bottombar.Visibility = Visibility.Visible;
+                Topbar.Visibility = Visibility.Collapsed;
+                PageTitleContainer.Visibility = Visibility.Visible;
+                Bottombar.Visibility = Visibility.Visible;
             }
             else
             {
-                topbar.Visibility = Visibility.Visible;
-                pageTitleContainer.Visibility = Visibility.Collapsed;
-                bottombar.Visibility = Visibility.Collapsed;
+                Topbar.Visibility = Visibility.Visible;
+                PageTitleContainer.Visibility = Visibility.Collapsed;
+                Bottombar.Visibility = Visibility.Collapsed;
             }
         }
     }

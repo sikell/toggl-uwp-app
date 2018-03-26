@@ -110,6 +110,7 @@
     <Compile Include="Services\Model\TimeEntry.cs" />
     <Compile Include="Services\Model\User.cs" />
     <Compile Include="Services\TimeEntryService.cs" />
+    <Compile Include="ViewModels\CommandBarPageViewModel.cs" />
     <Compile Include="ViewModels\LoginPageViewModel.cs" />
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
