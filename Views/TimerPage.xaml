@@ -57,6 +57,10 @@
         </Grid.RowDefinitions>
         <CommandBar x:Name="Topbar" Visibility="Collapsed" HorizontalContentAlignment="Stretch"
                     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <AppBarButton Icon="Refresh" 
+                          Label="Refresh" 
+                          Command="{Binding RefreshCommand}"/>
+            <AppBarSeparator />
             <AppBarButton Icon="Play" 
                           Label="Start"
                           Visibility="{Binding WhenRunningNotVisible}" 
@@ -108,6 +112,10 @@
 
         <CommandBar x:Name="Bottombar" Grid.Row="2" Visibility="Collapsed" HorizontalContentAlignment="Stretch"
                     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <AppBarButton Icon="Refresh" 
+                          Label="Refresh" 
+                          Command="{Binding RefreshCommand}"/>
+            <AppBarSeparator />
             <AppBarButton Icon="Play" 
                           Label="Start"
                           Visibility="{Binding WhenRunningNotVisible}" 

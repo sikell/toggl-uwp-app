@@ -32,6 +32,8 @@ namespace TogglTimer.ViewModels
                 await _timeEntryService.StopCurrentTimer();
                 Current = await _timeEntryService.GetCurrent();
             });
+
+            RefreshCommand = new DelegateCommand(OnNavigatedTo);
         }
 
         public User User
@@ -55,6 +57,7 @@ namespace TogglTimer.ViewModels
 
         public DelegateCommand StartTimerCommand { get; }
         public DelegateCommand StopTimerCommand { get; }
+        public DelegateCommand RefreshCommand { get; }
 
         public async void OnNavigatedTo()
         {
