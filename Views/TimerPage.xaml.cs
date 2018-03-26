@@ -1,15 +1,14 @@
 ﻿using Windows.Graphics.Display;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace TogglTimer.Views
 {
-    public sealed partial class TimerPage : Page
+    public sealed partial class TimerPage
     {
         public TimerPage()
         {
-            this.InitializeComponent();
-            this.Loaded += CommandBarPage_Loaded;
+            InitializeComponent();
+            Loaded += CommandBarPage_Loaded;
         }
 
         private void CommandBarPage_Loaded(object sender, RoutedEventArgs e)

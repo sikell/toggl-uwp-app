@@ -60,15 +60,15 @@
             <CommandBar.Content>
                 <controls:PageHeader>
                     <controls:PageHeader.HeaderContent>
-                        <TextBlock x:Name="HeaderTextBlock" Text="CommandBar Page" Style="{StaticResource PageTitleTextBlockStyle}"/>
+                        <TextBlock x:Name="HeaderTextBlock" Text="Timer" Style="{StaticResource PageTitleTextBlockStyle}"/>
                     </controls:PageHeader.HeaderContent>
                 </controls:PageHeader>
             </CommandBar.Content>
         </CommandBar>
 
-        <controls:PageHeader x:Name="PageTitleContainer" Visibility="Collapsed">
+        <controls:PageHeader Grid.Row="0" x:Name="PageTitleContainer" Visibility="Collapsed">
             <controls:PageHeader.HeaderContent>
-                <TextBlock x:Name="AltHeaderTextBlock" Text="Commandbar Page" Style="{StaticResource PageTitleTextBlockStyle}"/>
+                <TextBlock x:Name="AltHeaderTextBlock" Text="Timer" Style="{StaticResource PageTitleTextBlockStyle}"/>
             </controls:PageHeader.HeaderContent>
         </controls:PageHeader>
 
@@ -79,9 +79,9 @@
                            Style="{StaticResource GeneralTextBlockStyle}"/>
                 <TextBlock x:Name="CurrentDescTextBlock"
                            Text="{Binding Current.Description, Mode=TwoWay}" 
-                           Style="{StaticResource GeneralTextBlockStyle}"/>
+                           Style="{StaticResource TitleTextBlockStyle}"/>
+                <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Your App Content"/>
             </StackPanel>
-            <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Your App Content"/>
         </Grid>
 
         <CommandBar x:Name="Bottombar" Grid.Row="2" Visibility="Collapsed" HorizontalContentAlignment="Stretch" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
