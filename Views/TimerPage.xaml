@@ -4,24 +4,22 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:TogglTimer.Controls" 
+    xmlns:controls="using:TogglTimer.Controls"
     xmlns:mvvm="using:Prism.Windows.Mvvm"
     mc:Ignorable="d"
     mvvm:ViewModelLocator.AutoWireViewModel="True">
 
     <Page.Resources>
         <Style x:Key="GeneralTextBlockStyle" TargetType="TextBlock">
-            <Setter Property="Margin" Value="0,0,15,0" />
+            <Setter Property="Margin" Value="0,0,0,15" />
             <Setter Property="VerticalAlignment" Value="Top" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="Width" Value="300" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
         </Style>
         <Style x:Key="LabelTextBlockStyle" TargetType="TextBlock">
             <Setter Property="Margin" Value="0,15,0,0" />
             <Setter Property="VerticalAlignment" Value="Top" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="Width" Value="300" />
-            <Setter Property="FontSize" Value="12"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="FontSize" Value="12" />
         </Style>
     </Page.Resources>
 
@@ -33,9 +31,9 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ContentContainer.Margin" Value="24,0"/>
-                        <Setter Target="HeaderTextBlock.Style" Value="{StaticResource PageTitleTextBlockStyle}"/>
-                        <Setter Target="AltHeaderTextBlock.Style" Value="{StaticResource PageTitleTextBlockStyle}"/>
+                        <Setter Target="ContentContainer.Margin" Value="24,0" />
+                        <Setter Target="HeaderTextBlock.Style" Value="{StaticResource PageTitleTextBlockStyle}" />
+                        <Setter Target="AltHeaderTextBlock.Style" Value="{StaticResource PageTitleTextBlockStyle}" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState>
@@ -43,33 +41,46 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource MinWindowSnapPoint}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ContentContainer.Margin" Value="12,0"/>
-                        <Setter Target="HeaderTextBlock.Style" Value="{StaticResource NarrowPageTitleTextBlockStyle}"/>
-                        <Setter Target="AltHeaderTextBlock.Style" Value="{StaticResource NarrowPageTitleTextBlockStyle}"/>
+                        <Setter Target="ContentContainer.Margin" Value="12,0" />
+                        <Setter Target="HeaderTextBlock.Style" Value="{StaticResource NarrowPageTitleTextBlockStyle}" />
+                        <Setter Target="AltHeaderTextBlock.Style"
+                                Value="{StaticResource NarrowPageTitleTextBlockStyle}" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
             <RowDefinition />
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <CommandBar x:Name="Topbar" Visibility="Collapsed" HorizontalContentAlignment="Stretch" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <AppBarButton Icon="Edit" Label="Edit"/>
-            <AppBarButton Icon="Delete" Label="Delete"/>
-            <AppBarSeparator/>
-            <AppBarToggleButton Icon="Sort" Label="Sort"/>
+        <CommandBar x:Name="Topbar" Visibility="Collapsed" HorizontalContentAlignment="Stretch"
+                    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <AppBarButton Icon="Play" 
+                          Label="Start"
+                          Visibility="{Binding StartTimerVisibility}" 
+                          Command="{Binding StartTimerCommand}" />
+            <AppBarButton Icon="Stop" 
+                          Label="Stop" 
+                          Visibility="{Binding StopTimerVisibility}" 
+                          Command="{Binding StopTimerCommand}" />
+            <AppBarButton Icon="Edit" Label="Edit" />
+            <AppBarButton Icon="Delete" 
+                          Label="Delete" 
+                          Visibility="{Binding StopTimerVisibility}" />
+            <AppBarSeparator />
+            <AppBarToggleButton Icon="Sort" Label="Sort" />
             <CommandBar.SecondaryCommands>
-                <AppBarButton Label="Menu Item 1"/>
-                <AppBarButton Label="Menu Item 2"/>
-                <AppBarButton Label="Menu Item 3"/>
+                <AppBarButton Label="Menu Item 1" />
+                <AppBarButton Label="Menu Item 2" />
+                <AppBarButton Label="Menu Item 3" />
             </CommandBar.SecondaryCommands>
             <CommandBar.Content>
                 <controls:PageHeader>
                     <controls:PageHeader.HeaderContent>
-                        <TextBlock x:Name="HeaderTextBlock" Text="Timer" Style="{StaticResource PageTitleTextBlockStyle}"/>
+                        <TextBlock Text="Timer"
+                                   Style="{StaticResource PageTitleTextBlockStyle}" />
                     </controls:PageHeader.HeaderContent>
                 </controls:PageHeader>
             </CommandBar.Content>
@@ -77,65 +88,45 @@
 
         <controls:PageHeader Grid.Row="0" x:Name="PageTitleContainer" Visibility="Collapsed">
             <controls:PageHeader.HeaderContent>
-                <TextBlock x:Name="AltHeaderTextBlock" Text="Timer" Style="{StaticResource PageTitleTextBlockStyle}"/>
+                <TextBlock Text="Timer" Style="{StaticResource PageTitleTextBlockStyle}" />
             </controls:PageHeader.HeaderContent>
         </controls:PageHeader>
 
-        <Grid x:Name="ContentContainer" Grid.Row="1" EntranceNavigationTransitionInfo.IsTargetElement="True" Margin="24,0">
+        <Grid Grid.Row="1" EntranceNavigationTransitionInfo.IsTargetElement="True"
+              Margin="24,0">
             <StackPanel>
+                <TextBlock Text="User" Style="{StaticResource LabelTextBlockStyle}" />
+                <TextBlock Text="{Binding User.Fullname, Mode=TwoWay}"
+                           Style="{StaticResource GeneralTextBlockStyle}" />
                 <TextBlock Text="Running" Style="{StaticResource LabelTextBlockStyle}" />
-                <TextBlock x:Name="UsernameTextBlock"
-                           Text="{Binding User.Fullname, Mode=TwoWay}" 
-                           Style="{StaticResource GeneralTextBlockStyle}"/>
-                <TextBlock x:Name="CurrentDescTextBlock"
-                           Text="{Binding Current.Description, Mode=TwoWay}" 
-                           Style="{StaticResource GeneralTextBlockStyle}"/>
-                <AppBarButton Icon="Play" Label="Start" Command="{Binding StartTimerCommand}"></AppBarButton>
-                <AppBarButton Icon="Stop" Label="Stop" Command="{Binding StopTimerCommand}"></AppBarButton>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Current.Description, Mode=TwoWay}"
+                               Style="{StaticResource GeneralTextBlockStyle}" />
+                </StackPanel>
             </StackPanel>
         </Grid>
 
-        <CommandBar x:Name="Bottombar" Grid.Row="2" Visibility="Collapsed" HorizontalContentAlignment="Stretch" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <AppBarButton Icon="Edit" Label="Edit"/>
-            <AppBarButton Icon="Delete" Label="Delete"/>
-            <AppBarSeparator/>
-            <AppBarToggleButton Icon="Sort" Label="Sort"/>
+        <CommandBar x:Name="Bottombar" Grid.Row="2" Visibility="Collapsed" HorizontalContentAlignment="Stretch"
+                    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <AppBarButton Icon="Play" 
+                          Label="Start"
+                          Visibility="{Binding StartTimerVisibility}" 
+                          Command="{Binding StartTimerCommand}" />
+            <AppBarButton Icon="Stop" 
+                          Label="Stop" 
+                          Visibility="{Binding StopTimerVisibility}" 
+                          Command="{Binding StopTimerCommand}" />
+            <AppBarButton Icon="Edit" Label="Edit" />
+            <AppBarButton Icon="Delete" 
+                          Label="Delete" 
+                          Visibility="{Binding StopTimerVisibility}" />
+            <AppBarSeparator />
+            <AppBarToggleButton Icon="Sort" Label="Sort" />
             <CommandBar.SecondaryCommands>
-                <AppBarButton Label="Menu Item 1"/>
-                <AppBarButton Label="Menu Item 2"/>
-                <AppBarButton Label="Menu Item 3"/>
+                <AppBarButton Label="Menu Item 1" />
+                <AppBarButton Label="Menu Item 2" />
+                <AppBarButton Label="Menu Item 3" />
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Grid>
 </Page>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

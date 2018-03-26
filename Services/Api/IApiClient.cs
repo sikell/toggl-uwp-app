@@ -9,6 +9,6 @@ namespace TogglTimer.Services.Api
         Task<UserDto> GetUser(string apiToken);
         Task<UserDto> GetUser(string username, string password);
         Task<TimeEntryDto> StartCurrentTimer(TimeEntryDto newEntry, string apiToken);
-        Task<TimeEntryDto> StopCurrentTimer(string apiToken);
+        Task<TimeEntryDto> StopCurrentTimer(long entryId, string apiToken);
     }
 }

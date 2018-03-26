@@ -101,6 +101,7 @@
     <Compile Include="Services\Api\ApiClient.cs" />
     <Compile Include="Services\Api\IApiClient.cs" />
     <Compile Include="Services\Api\Model\TimeEntryDto.cs" />
+    <Compile Include="Services\Api\Model\TimeEntrySingleWrapperDto.cs" />
     <Compile Include="Services\Api\Model\TimeEntryWrapperDto.cs" />
     <Compile Include="Services\Api\Model\UserDataDto.cs" />
     <Compile Include="Services\Api\Model\UserDto.cs" />

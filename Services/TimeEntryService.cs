@@ -31,12 +31,15 @@ namespace TogglTimer.Services
 
         public async Task<TimeEntry> StopCurrentTimer()
         {
-            var newTimeEntry = await _apiClient.StopCurrentTimer(_authService.GetToken());
+            var timeEntry = await _apiClient.GetCurrentRunning(_authService.GetToken());
+            var newTimeEntry = await _apiClient.StopCurrentTimer(timeEntry.id, _authService.GetToken());
             return ConvertToTimeEntry(newTimeEntry);
         }
 
         private static TimeEntry ConvertToTimeEntry(TimeEntryDto newTimeEntry)
         {
+            if (newTimeEntry == null)
+                return null;
             return new TimeEntry()
             {
                 Id = newTimeEntry.id,
@@ -47,6 +50,8 @@ namespace TogglTimer.Services
 
         private static TimeEntryDto ConvertToTimeEntryDto(TimeEntry newTimeEntry)
         {
+            if (newTimeEntry == null)
+                return null;
             return new TimeEntryDto()
             {
                 id = newTimeEntry.Id,

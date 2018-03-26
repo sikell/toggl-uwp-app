@@ -32,7 +32,7 @@ namespace TogglTimer.Services.Api
 
         public async Task<TimeEntryDto> GetCurrentRunning(string apiToken)
         {
-            return (await DoGet<TimeEntryWrapperDto>("time_entries/current", ToBasicAuth(apiToken))).data;
+            return (await DoGet<TimeEntryWrapperDto>("time_entries/current", ToBasicAuth(apiToken)))?.data;
         }
 
         public async Task<UserDto> GetUser(string apiToken)
@@ -48,17 +48,46 @@ namespace TogglTimer.Services.Api
 
         public async Task<TimeEntryDto> StartCurrentTimer(TimeEntryDto newEntry, string apiToken)
         {
-            return await DoPost<TimeEntryDto, TimeEntryDto>("time_entries/start", ToBasicAuth(apiToken), newEntry);
+            var entry = new TimeEntrySingleWrapperDto {time_entry = newEntry};
+            return (await DoPost<TimeEntryWrapperDto, TimeEntrySingleWrapperDto>("time_entries/start", ToBasicAuth(apiToken), entry))?.data;
         }
 
-        public async Task<TimeEntryDto> StopCurrentTimer(string apiToken)
+        public async Task<TimeEntryDto> StopCurrentTimer(long entryId, string apiToken)
         {
-            return await DoPost<TimeEntryDto, TimeEntryDto>("time_entries/stop", ToBasicAuth(apiToken), null);
+            return (await DoPut<TimeEntryWrapperDto, TimeEntryDto>("time_entries/" + entryId + "/stop", ToBasicAuth(apiToken), null))?.data;
+        }
+
+        private async Task<TResult> DoPut<TResult, TBody>(string url, string credentials, TBody body)
+        {
+            var payload = JsonConvert.SerializeObject(body);
+            _log.Debug("PUT {0} - {1}", url, payload);
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri(_client.BaseAddress + url),
+                Method = HttpMethod.Put,
+                Headers =
+                {
+                    {HttpRequestHeader.Authorization.ToString(), "Basic " + credentials},
+                    {HttpRequestHeader.ContentType.ToString(), "application/json"}
+                },
+                Content = body != null ? new StringContent(payload) : null
+            };
+
+            var response = await _client.SendAsync(request);
+            if (!response.IsSuccessStatusCode)
+            {
+                _log.Error("PUT {0} failed with {1}! ", url, response.StatusCode);
+                return default(TResult);
+            }
+
+            var readAsStringAsync = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<TResult>(readAsStringAsync);
         }
 
         private async Task<TResult> DoPost<TResult, TBody>(string url, string credentials, TBody body)
         {
-            _log.Debug("POST {0}", url);
+            var payload = JsonConvert.SerializeObject(body);
+            _log.Debug("POST {0} - {1}", url, payload);
             var request = new HttpRequestMessage
             {
                 RequestUri = new Uri(_client.BaseAddress + url),
@@ -68,7 +97,7 @@ namespace TogglTimer.Services.Api
                     {HttpRequestHeader.Authorization.ToString(), "Basic " + credentials},
                     {HttpRequestHeader.ContentType.ToString(), "application/json"}
                 },
-                Content = body != null ? new StringContent(JsonConvert.SerializeObject(body)) : null
+                Content = body != null ? new StringContent(payload) : null
             };
 
             var response = await _client.SendAsync(request);

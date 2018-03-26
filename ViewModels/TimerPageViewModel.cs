@@ -1,4 +1,5 @@
-﻿using MetroLog;
+﻿using Windows.UI.Xaml;
+using MetroLog;
 using Prism.Commands;
 using Prism.Mvvm;
 using TogglTimer.Services;
@@ -23,7 +24,8 @@ namespace TogglTimer.ViewModels
 
             OnNavigatedTo();
 
-            StartTimerCommand = new DelegateCommand(async () => Current = await _timeEntryService.StartCurrentTimer(_current));
+            StartTimerCommand =
+                new DelegateCommand(async () => Current = await _timeEntryService.StartCurrentTimer(_current));
 
             StopTimerCommand = new DelegateCommand(async () =>
             {
@@ -44,8 +46,11 @@ namespace TogglTimer.ViewModels
             set => SetProperty(ref _current, value);
         }
 
-        public DelegateCommand StartTimerCommand;
-        public DelegateCommand StopTimerCommand;
+        public Visibility StartTimerVisibility => BooleanToVisibility(_current != null);
+        public Visibility StopTimerVisibility => BooleanToVisibility(_current == null);
+
+        public DelegateCommand StartTimerCommand { get; }
+        public DelegateCommand StopTimerCommand { get; }
 
         public async void OnNavigatedTo()
         {
@@ -53,5 +58,7 @@ namespace TogglTimer.ViewModels
             User = await _authService.GetUser();
             Current = await _timeEntryService.GetCurrent();
         }
+
+        private static Visibility BooleanToVisibility(bool value) => value ? Visibility.Visible : Visibility.Collapsed;
     }
 }
