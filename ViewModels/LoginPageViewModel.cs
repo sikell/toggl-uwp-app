@@ -34,7 +34,7 @@ namespace TogglTimer.ViewModels
 
                 if (await authService.AuthUser(_username, _password))
                 {
-                    NavigateToPage?.Invoke(this, typeof(CommandBarPage));
+                    NavigateToPage?.Invoke(this, typeof(TimerPage));
                 }
             });
         }

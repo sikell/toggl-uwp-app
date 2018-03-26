@@ -11,7 +11,6 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using TogglTimer.Controls;
 using TogglTimer.Views;
-using CommandBarPage = TogglTimer.Views.CommandBarPage;
 using DrillInPage = TogglTimer.Views.DrillInPage;
 
 namespace TogglTimer
@@ -38,7 +37,7 @@ namespace TogglTimer
                 {
                     Symbol = Symbol.Edit,
                     Label = "CommandBar Page",
-                    DestPage = typeof(CommandBarPage)
+                    DestPage = typeof(TimerPage)
                 },
                 new NavMenuItem()
                 {

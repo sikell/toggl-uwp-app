@@ -118,8 +118,8 @@
     <Compile Include="AppShell.xaml.cs">
       <DependentUpon>AppShell.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CommandBarPage.xaml.cs">
-      <DependentUpon>CommandBarPage.xaml</DependentUpon>
+    <Compile Include="Views\TimerPage.xaml.cs">
+      <DependentUpon>TimerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BasicSubPage.xaml.cs">
       <DependentUpon>BasicSubPage.xaml</DependentUpon>
@@ -166,7 +166,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CommandBarPage.xaml">
+    <Page Include="Views\TimerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

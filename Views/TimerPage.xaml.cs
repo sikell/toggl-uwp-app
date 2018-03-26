@@ -4,9 +4,9 @@ using Windows.UI.Xaml.Controls;
 
 namespace TogglTimer.Views
 {
-    public sealed partial class CommandBarPage : Page
+    public sealed partial class TimerPage : Page
     {
-        public CommandBarPage()
+        public TimerPage()
         {
             this.InitializeComponent();
             this.Loaded += CommandBarPage_Loaded;
