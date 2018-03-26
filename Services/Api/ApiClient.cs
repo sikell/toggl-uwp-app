@@ -32,49 +32,62 @@ namespace TogglTimer.Services.Api
 
         public async Task<TimeEntryDto> GetCurrentRunning(string apiToken)
         {
-            _log.Debug("Load current running toggl");
-            var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(apiToken + ":api_token"));
-            const string requestUri = "time_entries/current";
-            var request = new HttpRequestMessage
-            {
-                RequestUri = new Uri(_client.BaseAddress + requestUri),
-                Method = HttpMethod.Get,
-                Headers =
-                {
-                    {HttpRequestHeader.Authorization.ToString(), "Basic " + credentials}
-                }
-            };
-
-            var response = await _client.SendAsync(request);
-            if (!response.IsSuccessStatusCode)
-            {
-                _log.Error("Api access failed! " + response.StatusCode);
-                return null;
-            }
-
-            var readAsStringAsync = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<TimeEntryWrapperDto>(readAsStringAsync).data;
+            return await DoGet<TimeEntryDto>("time_entries/current", ToBasicAuth(apiToken));
         }
 
         public async Task<UserDto> GetUser(string apiToken)
         {
-            var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(apiToken + ":api_token"));
-            return await GetUserByBasicAuth(credentials);
+            return await DoGet<UserDto>("me", ToBasicAuth(apiToken));
         }
 
         public async Task<UserDto> GetUser(string username, string password)
         {
             var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(username + ":" + password));
-            return await GetUserByBasicAuth(credentials);
+            return await DoGet<UserDto>("me", credentials);
         }
 
-        private async Task<UserDto> GetUserByBasicAuth(string credentials)
+        public async Task<TimeEntryDto> StartCurrentTimer(TimeEntryDto newEntry, string apiToken)
         {
-            _log.Debug("Load actual user");
-            const string requestUri = "me";
+            return await DoPost<TimeEntryDto, TimeEntryDto>("time_entries/start", ToBasicAuth(apiToken), newEntry);
+        }
+
+        public async Task<TimeEntryDto> StopCurrentTimer(string apiToken)
+        {
+            return await DoPost<TimeEntryDto, TimeEntryDto>("time_entries/stop", ToBasicAuth(apiToken), null);
+        }
+
+        private async Task<TResult> DoPost<TResult, TBody>(string url, string credentials, TBody body)
+        {
+            _log.Debug("POST {0}", url);
             var request = new HttpRequestMessage
             {
-                RequestUri = new Uri(_client.BaseAddress + requestUri),
+                RequestUri = new Uri(_client.BaseAddress + url),
+                Method = HttpMethod.Post,
+                Headers =
+                {
+                    {HttpRequestHeader.Authorization.ToString(), "Basic " + credentials},
+                    {HttpRequestHeader.ContentType.ToString(), "application/json"}
+                },
+                Content = body != null ? new StringContent(JsonConvert.SerializeObject(body)) : null
+            };
+
+            var response = await _client.SendAsync(request);
+            if (!response.IsSuccessStatusCode)
+            {
+                _log.Error("POST {0} failed with {1}! ", url, response.StatusCode);
+                return default(TResult);
+            }
+
+            var readAsStringAsync = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<TResult>(readAsStringAsync);
+        }
+
+        private async Task<T> DoGet<T>(string url, string credentials)
+        {
+            _log.Debug("GET {0}", url);
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri(_client.BaseAddress + url),
                 Method = HttpMethod.Get,
                 Headers =
                 {
@@ -85,12 +98,17 @@ namespace TogglTimer.Services.Api
             var response = await _client.SendAsync(request);
             if (!response.IsSuccessStatusCode)
             {
-                _log.Error("Api access failed! " + response.StatusCode);
-                return null;
+                _log.Error("GET {0} failed with {1}! ", url, response.StatusCode);
+                return default(T);
             }
 
             var readAsStringAsync = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<UserDto>(readAsStringAsync);
+            return JsonConvert.DeserializeObject<T>(readAsStringAsync);
+        }
+
+        private static string ToBasicAuth(string apiToken)
+        {
+            return Convert.ToBase64String(Encoding.ASCII.GetBytes(apiToken + ":api_token"));
         }
     }
 }

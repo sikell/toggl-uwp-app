@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using MetroLog;
+﻿using MetroLog;
+using Prism.Commands;
 using Prism.Mvvm;
-using Prism.Windows.Navigation;
 using TogglTimer.Services;
 using TogglTimer.Services.Model;
 
@@ -21,7 +20,16 @@ namespace TogglTimer.ViewModels
         {
             _timeEntryService = timeEntryService;
             _authService = authService;
+
             OnNavigatedTo();
+
+            StartTimerCommand = new DelegateCommand(async () => Current = await _timeEntryService.StartCurrentTimer(_current));
+
+            StopTimerCommand = new DelegateCommand(async () =>
+            {
+                await _timeEntryService.StopCurrentTimer();
+                Current = await _timeEntryService.GetCurrent();
+            });
         }
 
         public User User
@@ -35,6 +43,9 @@ namespace TogglTimer.ViewModels
             get => _current;
             set => SetProperty(ref _current, value);
         }
+
+        public DelegateCommand StartTimerCommand;
+        public DelegateCommand StopTimerCommand;
 
         public async void OnNavigatedTo()
         {

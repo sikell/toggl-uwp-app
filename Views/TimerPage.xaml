@@ -11,10 +11,17 @@
 
     <Page.Resources>
         <Style x:Key="GeneralTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0,0,15,0" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Width" Value="300" />
+        </Style>
+        <Style x:Key="LabelTextBlockStyle" TargetType="TextBlock">
             <Setter Property="Margin" Value="0,15,0,0" />
             <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="Width" Value="300" />
+            <Setter Property="FontSize" Value="12"></Setter>
         </Style>
     </Page.Resources>
 
@@ -76,13 +83,15 @@
 
         <Grid x:Name="ContentContainer" Grid.Row="1" EntranceNavigationTransitionInfo.IsTargetElement="True" Margin="24,0">
             <StackPanel>
+                <TextBlock Text="Running" Style="{StaticResource LabelTextBlockStyle}" />
                 <TextBlock x:Name="UsernameTextBlock"
                            Text="{Binding User.Fullname, Mode=TwoWay}" 
                            Style="{StaticResource GeneralTextBlockStyle}"/>
                 <TextBlock x:Name="CurrentDescTextBlock"
                            Text="{Binding Current.Description, Mode=TwoWay}" 
-                           Style="{StaticResource TitleTextBlockStyle}"/>
-                <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Your App Content"/>
+                           Style="{StaticResource GeneralTextBlockStyle}"/>
+                <AppBarButton Icon="Play" Label="Start" Command="{Binding StartTimerCommand}"></AppBarButton>
+                <AppBarButton Icon="Stop" Label="Stop" Command="{Binding StopTimerCommand}"></AppBarButton>
             </StackPanel>
         </Grid>
 
@@ -99,6 +108,22 @@
         </CommandBar>
     </Grid>
 </Page>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

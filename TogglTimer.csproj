@@ -139,7 +139,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\smalltile-sdk.png" />
-    <None Include="Assets\splash-sdk.png.OLD" />
     <Content Include="Assets\splash-sdk.scale-100.png" />
     <Content Include="Assets\splash-sdk.scale-125.png" />
     <Content Include="Assets\splash-sdk.scale-150.png" />
