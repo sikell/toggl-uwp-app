@@ -16,7 +16,7 @@
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="TogglTimer.App">
       <uap:VisualElements DisplayName="Toggl Timer" Square150x150Logo="Assets\squaretile-sdk.png" Square44x44Logo="Assets\smalltile-sdk.png" Description="Simple inofficial toggle app for windows." BackgroundColor="#00B2F0">
-        <uap:SplashScreen Image="Assets\splash-sdk.png" />
+        <uap:SplashScreen Image="Assets\splash-sdk.png" BackgroundColor="#efefef" />
       </uap:VisualElements>
     </Application>
   </Applications>
