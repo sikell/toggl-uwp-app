@@ -39,15 +39,19 @@ namespace TogglTimer.ViewModels
             get => _user;
             set => SetProperty(ref _user, value);
         }
-
+        
         public TimeEntry Current
         {
             get => _current;
-            set => SetProperty(ref _current, value);
+            set => SetProperty(ref _current, value, () =>
+            {
+                RaisePropertyChanged($"WhenRunningVisible");
+                RaisePropertyChanged($"WhenRunningNotVisible");
+            });
         }
 
-        public Visibility StartTimerVisibility => BooleanToVisibility(_current != null);
-        public Visibility StopTimerVisibility => BooleanToVisibility(_current == null);
+        public Visibility WhenRunningNotVisible => BooleanToVisibility(_current == null);
+        public Visibility WhenRunningVisible => BooleanToVisibility(_current != null);
 
         public DelegateCommand StartTimerCommand { get; }
         public DelegateCommand StopTimerCommand { get; }

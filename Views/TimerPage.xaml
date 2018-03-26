@@ -59,16 +59,16 @@
                     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <AppBarButton Icon="Play" 
                           Label="Start"
-                          Visibility="{Binding StartTimerVisibility}" 
+                          Visibility="{Binding WhenRunningNotVisible}" 
                           Command="{Binding StartTimerCommand}" />
             <AppBarButton Icon="Stop" 
                           Label="Stop" 
-                          Visibility="{Binding StopTimerVisibility}" 
+                          Visibility="{Binding WhenRunningVisible}" 
                           Command="{Binding StopTimerCommand}" />
             <AppBarButton Icon="Edit" Label="Edit" />
             <AppBarButton Icon="Delete" 
                           Label="Delete" 
-                          Visibility="{Binding StopTimerVisibility}" />
+                          Visibility="{Binding WhenRunningVisible}" />
             <AppBarSeparator />
             <AppBarToggleButton Icon="Sort" Label="Sort" />
             <CommandBar.SecondaryCommands>
@@ -110,16 +110,16 @@
                     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <AppBarButton Icon="Play" 
                           Label="Start"
-                          Visibility="{Binding StartTimerVisibility}" 
+                          Visibility="{Binding WhenRunningNotVisible}" 
                           Command="{Binding StartTimerCommand}" />
             <AppBarButton Icon="Stop" 
                           Label="Stop" 
-                          Visibility="{Binding StopTimerVisibility}" 
+                          Visibility="{Binding WhenRunningVisible}" 
                           Command="{Binding StopTimerCommand}" />
             <AppBarButton Icon="Edit" Label="Edit" />
             <AppBarButton Icon="Delete" 
                           Label="Delete" 
-                          Visibility="{Binding StopTimerVisibility}" />
+                          Visibility="{Binding WhenRunningVisible}" />
             <AppBarSeparator />
             <AppBarToggleButton Icon="Sort" Label="Sort" />
             <CommandBar.SecondaryCommands>
