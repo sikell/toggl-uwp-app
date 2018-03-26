@@ -7,9 +7,9 @@ using TogglTimer.Services.Model;
 
 namespace TogglTimer.ViewModels
 {
-    public class CommandBarPageViewModel : BindableBase
+    public class TimerPageViewModel : BindableBase
     {
-        private readonly ILogger _log = LogManagerFactory.DefaultLogManager.GetLogger<CommandBarPageViewModel>();
+        private readonly ILogger _log = LogManagerFactory.DefaultLogManager.GetLogger<TimerPageViewModel>();
 
         private User _user;
         private TimeEntry _current;
@@ -17,7 +17,7 @@ namespace TogglTimer.ViewModels
         private readonly IAuthService _authService;
         private readonly ITimeEntryService _timeEntryService;
 
-        public CommandBarPageViewModel(ITimeEntryService timeEntryService, IAuthService authService)
+        public TimerPageViewModel(ITimeEntryService timeEntryService, IAuthService authService)
         {
             _timeEntryService = timeEntryService;
             _authService = authService;
@@ -38,6 +38,7 @@ namespace TogglTimer.ViewModels
 
         public async void OnNavigatedTo()
         {
+            _log.Debug("Load current user info.");
             User = await _authService.GetUser();
             Current = await _timeEntryService.GetCurrent();
         }

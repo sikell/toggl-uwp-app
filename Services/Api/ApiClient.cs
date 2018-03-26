@@ -32,6 +32,7 @@ namespace TogglTimer.Services.Api
 
         public async Task<TimeEntryDto> GetCurrentRunning(string apiToken)
         {
+            _log.Debug("Load current running toggl");
             var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(apiToken + ":api_token"));
             const string requestUri = "time_entries/current";
             var request = new HttpRequestMessage
@@ -69,6 +70,7 @@ namespace TogglTimer.Services.Api
 
         private async Task<UserDto> GetUserByBasicAuth(string credentials)
         {
+            _log.Debug("Load actual user");
             const string requestUri = "me";
             var request = new HttpRequestMessage
             {
