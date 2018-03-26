@@ -20,7 +20,9 @@ namespace TogglTimer.Services
 
         public string GetToken()
         {
-            return _token;
+            if (IsAuthenticated()) return _token;
+            _log.Error("User not authenticated!");
+            return null;
         }
 
         public bool IsAuthenticated()
@@ -42,12 +44,19 @@ namespace TogglTimer.Services
             }
 
             _log.Info("Stored user credentials were found for {0}", credential.UserName);
+            credential.RetrievePassword();
             _token = credential.Password;
             return true;
         }
 
         public async Task<User> GetUser()
         {
+            if (!IsAuthenticated())
+            {
+                _log.Error("User not authenticated!");
+                return null;
+            }
+
             var user = await _apiClient.GetUser(_token);
             return new User()
             {
@@ -79,6 +88,7 @@ namespace TogglTimer.Services
             var credentialList = vault.FindAllByResource(ResourceName);
             if (credentialList.Count <= 0)
             {
+                _log.Info("No stored credentials found.");
                 return null;
             }
 
