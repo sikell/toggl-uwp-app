@@ -5,7 +5,7 @@
         public long id { get; set; }
         public string gui { get; set; }
         public long wid { get; set; }
-        public long pid { get; set; }
+        public long? pid { get; set; }
         public bool billable { get; set; }
         public string start { get; set; }
         public long duration { get; set; }

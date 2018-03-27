@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -32,7 +34,7 @@ namespace TogglTimer.Services.Api
 
         public async Task<TimeEntryDto> GetCurrentRunning(string apiToken)
         {
-            return (await DoGet<TimeEntryWrapperDto>("time_entries/current", ToBasicAuth(apiToken)))?.data;
+            return (await DoGet<DataWrapperDto<TimeEntryDto>>("time_entries/current", ToBasicAuth(apiToken)))?.data;
         }
 
         public async Task<UserDto> GetUser(string apiToken)
@@ -49,12 +51,29 @@ namespace TogglTimer.Services.Api
         public async Task<TimeEntryDto> StartCurrentTimer(TimeEntryDto newEntry, string apiToken)
         {
             var entry = new TimeEntrySingleWrapperDto {time_entry = newEntry};
-            return (await DoPost<TimeEntryWrapperDto, TimeEntrySingleWrapperDto>("time_entries/start", ToBasicAuth(apiToken), entry))?.data;
+            return (await DoPost<DataWrapperDto<TimeEntryDto>, TimeEntrySingleWrapperDto>(
+                "time_entries/start", ToBasicAuth(apiToken), entry))?.data;
         }
 
         public async Task<TimeEntryDto> StopCurrentTimer(long entryId, string apiToken)
         {
-            return (await DoPut<TimeEntryWrapperDto, TimeEntryDto>("time_entries/" + entryId + "/stop", ToBasicAuth(apiToken), null))?.data;
+            return (await DoPut<DataWrapperDto<TimeEntryDto>, TimeEntryDto>(
+                "time_entries/" + entryId + "/stop", ToBasicAuth(apiToken), null))?.data;
+        }
+
+        public async Task<Collection<WorkspaceDto>> ListWorkspaces(string apiToken)
+        {
+            return await DoGet<Collection<WorkspaceDto>>("workspaces", ToBasicAuth(apiToken));
+        }
+
+        public async Task<Collection<ProjectDto>> ListProjects(long workspaceId, string apiToken)
+        {
+            return await DoGet<Collection<ProjectDto>>("workspaces/" + workspaceId + "/projects", ToBasicAuth(apiToken));
+        }
+
+        public async Task<ProjectDto> GetProject(long projectId, string apiToken)
+        {
+            return (await DoGet<DataWrapperDto<ProjectDto>>("projects/" + projectId, ToBasicAuth(apiToken))).data;
         }
 
         private async Task<TResult> DoPut<TResult, TBody>(string url, string credentials, TBody body)

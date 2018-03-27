@@ -90,6 +90,8 @@ namespace TogglTimer
             RegisterTypeIfMissing(typeof(IApiClient), typeof(ApiClient), true);
             RegisterTypeIfMissing(typeof(IAuthService), typeof(AuthService), true);
             RegisterTypeIfMissing(typeof(ITimeEntryService), typeof(TimeEntryService), true);
+            RegisterTypeIfMissing(typeof(IProjectService), typeof(ProjectService), true);
+            RegisterTypeIfMissing(typeof(IWorkspaceService), typeof(WorkspaceService), true);
             Application.Current.Resources.Add("IoC", Container);
         }
 
