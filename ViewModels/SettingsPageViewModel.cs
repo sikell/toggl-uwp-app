@@ -10,8 +10,11 @@ namespace TogglTimer.ViewModels
     {
         public SettingsPageViewModel(IAuthService authService)
         {
-            LogoutCommand = new DelegateCommand(() => authService.LogoutUser());
-            NavigateToPage?.Invoke(this, typeof(LoginPage));
+            LogoutCommand = new DelegateCommand(() =>
+            {
+                authService.LogoutUser();
+                NavigateToPage?.Invoke(this, typeof(LoginPage));
+            });
         }
 
         public DelegateCommand LogoutCommand { get; }
