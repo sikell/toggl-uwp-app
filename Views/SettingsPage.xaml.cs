@@ -8,7 +8,7 @@ namespace TogglTimer.Views
         {
             InitializeComponent();
 
-            var viewModel = (SettingsPageViewModel) DataContext;
+            var viewModel = (INavigationViewModel) DataContext;
             viewModel.NavigateToPage += (sender, e) => { Frame.Navigate(e); };
         }
     }

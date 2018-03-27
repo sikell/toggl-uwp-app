@@ -6,7 +6,7 @@ using TogglTimer.Views;
 
 namespace TogglTimer.ViewModels
 {
-    public class SettingsPageViewModel : BindableBase
+    public class SettingsPageViewModel : BindableBase, INavigationViewModel
     {
         public SettingsPageViewModel(IAuthService authService)
         {

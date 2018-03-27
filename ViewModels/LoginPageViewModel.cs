@@ -11,7 +11,7 @@ using TogglTimer.Views;
 
 namespace TogglTimer.ViewModels
 {
-    public class LoginPageViewModel : ValidatableBindableBase
+    public class LoginPageViewModel : ValidatableBindableBase, INavigationViewModel
     {
         private readonly ILogger _log = LogManagerFactory.DefaultLogManager.GetLogger<LoginPageViewModel>();
 
