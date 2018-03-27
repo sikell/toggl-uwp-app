@@ -9,11 +9,10 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.Practices.Unity;
 using Prism.Unity.Windows;
-using Prism.Windows.Navigation;
 using TogglTimer.Services;
 using TogglTimer.Services.Api;
+using TogglTimer.Views;
 using LandingPage = TogglTimer.Views.LandingPage;
 
 namespace TogglTimer
@@ -36,8 +35,6 @@ namespace TogglTimer
         protected override UIElement CreateShell(Frame rootFrame)
         {
             var shell = Container.TryResolve<AppShell>();
-            shell.AppFrame.Navigate(typeof(LandingPage), null,
-                new Windows.UI.Xaml.Media.Animation.SuppressNavigationTransitionInfo());
             // Handle navigation events
             shell.AppFrame.NavigationFailed += OnNavigationFailed;
             shell.AppFrame.Navigated += OnNavigated;
@@ -61,7 +58,7 @@ namespace TogglTimer
             if (shell.AppFrame.Content == null)
             {
                 // When the navigation stack isn't restored, navigate to the first page, suppressing the initial entrance animation.
-                shell.AppFrame.Navigate(typeof(LandingPage), null,
+                shell.AppFrame.Navigate(typeof(TimerPage), null,
                     new Windows.UI.Xaml.Media.Animation.SuppressNavigationTransitionInfo());
             }
             
@@ -93,7 +90,7 @@ namespace TogglTimer
             RegisterTypeIfMissing(typeof(IApiClient), typeof(ApiClient), true);
             RegisterTypeIfMissing(typeof(IAuthService), typeof(AuthService), true);
             RegisterTypeIfMissing(typeof(ITimeEntryService), typeof(TimeEntryService), true);
-            Application.Current.Resources.Add("IoC", this.Container);
+            Application.Current.Resources.Add("IoC", Container);
         }
 
         /// <summary>

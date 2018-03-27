@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Prism.Commands;
 using TogglTimer.Controls;
 using TogglTimer.Views;
 using DrillInPage = TogglTimer.Views.DrillInPage;
@@ -44,7 +45,7 @@ namespace TogglTimer
                     Symbol = Symbol.Favorite,
                     Label = "Drill In Page",
                     DestPage = typeof(DrillInPage)
-                },
+                }
             });
 
         public static AppShell Current = null;
@@ -81,6 +82,14 @@ namespace TogglTimer
         }
 
         public Frame AppFrame => this.frame;
+
+        private void SettingsNavPaneButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            RootSplitView.IsPaneOpen = false;
+            if (AppFrame.CurrentSourcePageType == typeof(SettingsPage))
+                return;
+            AppFrame.Navigate(typeof(SettingsPage));
+        }
 
         /// <summary>
         /// Invoked when window title bar visibility changes, such as after loading or in tablet mode
@@ -187,13 +196,14 @@ namespace TogglTimer
             {
                 // In cases where a page drills into sub-pages then we'll highlight the most recent
                 // navigation menu item that appears in the BackStack
-                foreach (var entry in this.AppFrame.BackStack.Reverse())
+                // TODO settings page f.e. needs another handling
+                /*foreach (var entry in this.AppFrame.BackStack.Reverse())
                 {
                     item = (from p in this._navlist where p.DestPage == entry.SourcePageType select p)
                         .SingleOrDefault();
                     if (item != null)
                         break;
-                }
+                }*/
             }
 
             var container = (ListViewItem) NavMenuList.ContainerFromItem(item);

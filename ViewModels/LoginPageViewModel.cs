@@ -19,7 +19,7 @@ namespace TogglTimer.ViewModels
         private string _password;
 
         private readonly IAuthService _authService;
-        
+
         public LoginPageViewModel(IAuthService authService)
         {
             _authService = authService;
@@ -56,6 +56,5 @@ namespace TogglTimer.ViewModels
         }
 
         public DelegateCommand LoginCommand { get; }
-
     }
 }
