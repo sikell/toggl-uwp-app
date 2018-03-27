@@ -8,6 +8,7 @@ namespace TogglTimer.Services
     {
         string GetToken();
         bool IsAuthenticated();
+        bool LogoutUser();
         Task<User> GetUser();
         Task<bool> AuthUser(string username, string password);
     }

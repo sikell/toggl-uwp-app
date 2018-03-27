@@ -82,6 +82,14 @@ namespace TogglTimer.Services
             return true;
         }
 
+        public bool LogoutUser()
+        {
+            _token = null;
+            var vault = new PasswordVault();
+            vault.Remove(GetCredentialFromLocker());
+            return true;
+        }
+
         private PasswordCredential GetCredentialFromLocker()
         {
             var vault = new PasswordVault();

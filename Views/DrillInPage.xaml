@@ -4,8 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:Boilerplate.Controls" 
-    xmlns:controls1="using:TogglTimer.Controls"
+    xmlns:controls="using:TogglTimer.Controls"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -37,11 +36,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <controls1:PageHeader>
-            <controls1:PageHeader.HeaderContent>
-                <TextBlock x:Name="title" Style="{StaticResource PageTitleTextBlockStyle}" Text="Drill-in Page"/>
-            </controls1:PageHeader.HeaderContent>
-        </controls1:PageHeader>
+        <controls:PageHeader>
+            <controls:PageHeader.HeaderContent>
+                <TextBlock Style="{StaticResource PageTitleTextBlockStyle}" Text="Drill-in Page"/>
+            </controls:PageHeader.HeaderContent>
+        </controls:PageHeader>
 
         <ListView x:Name="ContentList"
                   Grid.Row="1"

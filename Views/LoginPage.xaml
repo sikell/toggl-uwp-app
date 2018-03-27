@@ -5,13 +5,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:mvvm="using:Prism.Windows.Mvvm"
+    xmlns:controls="using:TogglTimer.Controls"
     mc:Ignorable="d"
     mvvm:ViewModelLocator.AutoWireViewModel="True">
 
-    <Grid x:Name="LayoutRoot"
-          Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-          EntranceNavigationTransitionInfo.IsTargetElement="True"
-          Padding="24,0">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+          EntranceNavigationTransitionInfo.IsTargetElement="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState>
@@ -33,7 +37,13 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <StackPanel Margin="10">
+        <controls:PageHeader Grid.Row="0">
+            <controls:PageHeader.HeaderContent>
+                <TextBlock Text="Login" Style="{StaticResource PageTitleTextBlockStyle}" />
+            </controls:PageHeader.HeaderContent>
+        </controls:PageHeader>
+
+        <StackPanel Margin="10" Grid.Row="1">
             <TextBox x:Name="UsernameTextBox" 
                      Text="{Binding Username, Mode=TwoWay}" 
                      Style="{StaticResource GeneralTextBoxStyle}"/>
