@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using Windows.Security.Credentials;
 using MetroLog;
 using TogglTimer.Services.Api;
@@ -38,10 +39,7 @@ namespace TogglTimer.Services
             _log.Info("Try to load credentials");
             var credential = GetCredentialFromLocker();
             if (credential == null)
-            {
-                _log.Info("No credentials found ");
                 return false;
-            }
 
             _log.Info("Stored user credentials were found for {0}", credential.UserName);
             credential.RetrievePassword();
@@ -86,29 +84,39 @@ namespace TogglTimer.Services
         {
             _token = null;
             var vault = new PasswordVault();
-            vault.Remove(GetCredentialFromLocker());
+            var credentialFromLocker = GetCredentialFromLocker();
+            if (credentialFromLocker != null)
+                vault.Remove(credentialFromLocker);
             return true;
         }
 
         private PasswordCredential GetCredentialFromLocker()
         {
             var vault = new PasswordVault();
-            var credentialList = vault.FindAllByResource(ResourceName);
-            if (credentialList.Count <= 0)
+            try
             {
-                _log.Info("No stored credentials found.");
-                return null;
-            }
+                var credentialList = vault.FindAllByResource(ResourceName);
 
-            if (credentialList.Count == 1)
-            {
-                return credentialList[0];
-            }
+                if (credentialList.Count <= 0)
+                {
+                    _log.Info("No stored credentials found.");
+                    return null;
+                }
 
-            _log.Error("There are multiple usernames stored! Remove all!");
-            foreach (var c in credentialList)
+                if (credentialList.Count == 1)
+                {
+                    return credentialList[0];
+                }
+
+                _log.Error("There are multiple usernames stored! Remove all!");
+                foreach (var c in credentialList)
+                {
+                    vault.Remove(c);
+                }
+            }
+            catch (COMException e)
             {
-                vault.Remove(c);
+                _log.Info(e.Message, e);
             }
 
             return null;
