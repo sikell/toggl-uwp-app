@@ -1,4 +1,7 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using MetroLog;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -47,13 +50,17 @@ namespace TogglTimer.ViewModels
             get => _current;
             set => SetProperty(ref _current, value, () =>
             {
-                RaisePropertyChanged($"WhenRunningVisible");
-                RaisePropertyChanged($"WhenRunningNotVisible");
+                RaisePropertyChanged(nameof(WhenRunningVisible));
+                RaisePropertyChanged(nameof(WhenRunningNotVisible));
+                RaisePropertyChanged(nameof(RunningTimeDuration));
             });
         }
 
         public Visibility WhenRunningNotVisible => BooleanToVisibility(_current == null);
         public Visibility WhenRunningVisible => BooleanToVisibility(_current != null);
+
+        public string RunningTimeDuration =>
+            _current == null ? null : DateTime.Now.Subtract(_current.Start).ToString("hh\\:mm\\:ss");
 
         public DelegateCommand StartTimerCommand { get; }
         public DelegateCommand StopTimerCommand { get; }
@@ -67,5 +74,6 @@ namespace TogglTimer.ViewModels
         }
 
         private static Visibility BooleanToVisibility(bool value) => value ? Visibility.Visible : Visibility.Collapsed;
+        
     }
 }

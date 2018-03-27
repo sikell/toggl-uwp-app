@@ -7,5 +7,6 @@ namespace TogglTimer.Services.Model
         public long Id { get; set; }
         public string Description { get; set; }
         public DateTime Start { get; set; }
+        public long Ticker { get; set; }
     }
 }

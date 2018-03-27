@@ -107,6 +107,11 @@
                     <TextBlock Text="{Binding Current.Description, Mode=TwoWay}"
                                Style="{StaticResource GeneralTextBlockStyle}" />
                 </StackPanel>
+                <TextBlock Text="Duration" Style="{StaticResource LabelTextBlockStyle}" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding RunningTimeDuration}"
+                               Style="{StaticResource GeneralTextBlockStyle}" />
+                </StackPanel>
             </StackPanel>
         </Grid>
 
