@@ -107,6 +107,7 @@
     <Compile Include="Services\Api\ApiClient.cs" />
     <Compile Include="Services\Api\IApiClient.cs" />
     <Compile Include="Services\Api\Model\ProjectDto.cs" />
+    <Compile Include="Services\Api\Model\NewTimeEntryDto.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\Model\Project.cs" />
     <Compile Include="Services\Api\Model\TimeEntryDto.cs" />

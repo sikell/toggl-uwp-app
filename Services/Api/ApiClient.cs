@@ -48,10 +48,10 @@ namespace TogglTimer.Services.Api
             return await DoGet<UserDto>("me", credentials);
         }
 
-        public async Task<TimeEntryDto> StartCurrentTimer(TimeEntryDto newEntry, string apiToken)
+        public async Task<TimeEntryDto> StartCurrentTimer(NewTimeEntryDto newEntry, string apiToken)
         {
-            var entry = new TimeEntrySingleWrapperDto {time_entry = newEntry};
-            return (await DoPost<DataWrapperDto<TimeEntryDto>, TimeEntrySingleWrapperDto>(
+            var entry = new TimeEntrySingleWrapperDto<NewTimeEntryDto> {time_entry = newEntry};
+            return (await DoPost<DataWrapperDto<TimeEntryDto>, TimeEntrySingleWrapperDto<NewTimeEntryDto>>(
                 "time_entries/start", ToBasicAuth(apiToken), entry))?.data;
         }
 
@@ -95,7 +95,7 @@ namespace TogglTimer.Services.Api
             var response = await _client.SendAsync(request);
             if (!response.IsSuccessStatusCode)
             {
-                _log.Error("PUT {0} failed with {1}! ", url, response.StatusCode);
+                _log.Error("PUT {0} failed with {1}!", url, response.StatusCode);
                 return default(TResult);
             }
 
@@ -122,7 +122,7 @@ namespace TogglTimer.Services.Api
             var response = await _client.SendAsync(request);
             if (!response.IsSuccessStatusCode)
             {
-                _log.Error("POST {0} failed with {1}! ", url, response.StatusCode);
+                _log.Error("POST {0} failed with {1} - {2}! ", url, response.StatusCode, await response.Content.ReadAsStringAsync());
                 return default(TResult);
             }
 

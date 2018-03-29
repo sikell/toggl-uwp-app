@@ -1,7 +1,7 @@
 ﻿namespace TogglTimer.Services.Api.Model
 {
-    public class TimeEntrySingleWrapperDto
+    public class TimeEntrySingleWrapperDto<T>
     {
-        public TimeEntryDto time_entry { get; set; }
+        public T time_entry { get; set; }
     }
 }

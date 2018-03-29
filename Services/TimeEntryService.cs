@@ -8,6 +8,8 @@ namespace TogglTimer.Services
 {
     public class TimeEntryService : ITimeEntryService
     {
+        private const string CreatedWith = "toggle_uwp_client";
+
         private readonly IAuthService _authService;
         private readonly IApiClient _apiClient;
         private readonly IProjectService _projectService;
@@ -51,16 +53,18 @@ namespace TogglTimer.Services
             };
         }
 
-        private static TimeEntryDto ConvertToTimeEntryDto(TimeEntry newTimeEntry)
+        private static NewTimeEntryDto ConvertToTimeEntryDto(TimeEntry newTimeEntry)
         {
             if (newTimeEntry == null)
                 return null;
-            return new TimeEntryDto()
+            return new NewTimeEntryDto()
             {
                 id = newTimeEntry.Id,
                 description = newTimeEntry.Description,
                 start = newTimeEntry.Start.ToString("s"),
-                pid = newTimeEntry.Project?.Id
+                pid = newTimeEntry.Project?.Id,
+                duration = -1,
+                created_with = CreatedWith
             };
         }
     }

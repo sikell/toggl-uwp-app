@@ -3,6 +3,6 @@
     public class WorkspaceDto
     {
         public long id { get; set; }
-        public long name { get; set; }
+        public string name { get; set; }
     }
 }

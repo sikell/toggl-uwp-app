@@ -57,21 +57,21 @@
         </Grid.RowDefinitions>
         <CommandBar x:Name="Topbar" Visibility="Collapsed" HorizontalContentAlignment="Stretch"
                     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <AppBarButton Icon="Refresh" 
-                          Label="Refresh" 
-                          Command="{Binding RefreshCommand}"/>
+            <AppBarButton Icon="Refresh"
+                          Label="Refresh"
+                          Command="{Binding RefreshCommand}" />
             <AppBarSeparator />
-            <AppBarButton Icon="Play" 
+            <AppBarButton Icon="Play"
                           Label="Start"
-                          Visibility="{Binding WhenRunningNotVisible}" 
+                          Visibility="{Binding WhenRunningNotVisible}"
                           Command="{Binding StartTimerCommand}" />
-            <AppBarButton Icon="Stop" 
-                          Label="Stop" 
-                          Visibility="{Binding WhenRunningVisible}" 
+            <AppBarButton Icon="Stop"
+                          Label="Stop"
+                          Visibility="{Binding WhenRunningVisible}"
                           Command="{Binding StopTimerCommand}" />
             <AppBarButton Icon="Edit" Label="Edit" />
-            <AppBarButton Icon="Delete" 
-                          Label="Delete" 
+            <AppBarButton Icon="Delete"
+                          Label="Delete"
                           Visibility="{Binding WhenRunningVisible}" />
             <AppBarSeparator />
             <AppBarToggleButton Icon="Sort" Label="Sort" />
@@ -105,38 +105,54 @@
                 <TextBlock Text="Running" Style="{StaticResource LabelTextBlockStyle}" />
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{Binding Current.Description, Mode=TwoWay}"
-                               Style="{StaticResource GeneralTextBlockStyle}" />
+                               Style="{StaticResource GeneralTextBlockStyle}"
+                               Visibility="{Binding WhenRunningVisible}" />
+                    <TextBox Text="{Binding NewEntry.Description, Mode=TwoWay}"
+                             Style="{StaticResource GeneralTextBoxStyle}"
+                             Visibility="{Binding WhenRunningNotVisible}" />
                 </StackPanel>
                 <TextBlock Text="Project" Style="{StaticResource LabelTextBlockStyle}" />
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{Binding Current.Project.Name}"
-                               Style="{StaticResource GeneralTextBlockStyle}" />
+                               Style="{StaticResource GeneralTextBlockStyle}"
+                               Visibility="{Binding WhenRunningVisible}" />
+                    <ComboBox SelectedValue="{Binding NewEntry.Project, Mode=TwoWay}"
+                              ItemsSource="{Binding Projects}"
+                              DisplayMemberPath="Name"
+                              Visibility="{Binding WhenRunningNotVisible}" />
                 </StackPanel>
                 <TextBlock Text="Duration" Style="{StaticResource LabelTextBlockStyle}" />
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{Binding RunningTimeDuration}"
                                Style="{StaticResource GeneralTextBlockStyle}" />
                 </StackPanel>
+                <TextBlock Text="Workspace" Style="{StaticResource LabelTextBlockStyle}" />
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox SelectedValue="{Binding Workspace, Mode=TwoWay}"
+                              ItemsSource="{Binding Workspaces}"
+                              DisplayMemberPath="Name"
+                              Visibility="{Binding WhenRunningNotVisible}" />
+                </StackPanel>
             </StackPanel>
         </Grid>
 
         <CommandBar x:Name="Bottombar" Grid.Row="2" Visibility="Collapsed" HorizontalContentAlignment="Stretch"
                     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <AppBarButton Icon="Refresh" 
-                          Label="Refresh" 
-                          Command="{Binding RefreshCommand}"/>
+            <AppBarButton Icon="Refresh"
+                          Label="Refresh"
+                          Command="{Binding RefreshCommand}" />
             <AppBarSeparator />
-            <AppBarButton Icon="Play" 
+            <AppBarButton Icon="Play"
                           Label="Start"
-                          Visibility="{Binding WhenRunningNotVisible}" 
+                          Visibility="{Binding WhenRunningNotVisible}"
                           Command="{Binding StartTimerCommand}" />
-            <AppBarButton Icon="Stop" 
-                          Label="Stop" 
-                          Visibility="{Binding WhenRunningVisible}" 
+            <AppBarButton Icon="Stop"
+                          Label="Stop"
+                          Visibility="{Binding WhenRunningVisible}"
                           Command="{Binding StopTimerCommand}" />
             <AppBarButton Icon="Edit" Label="Edit" />
-            <AppBarButton Icon="Delete" 
-                          Label="Delete" 
+            <AppBarButton Icon="Delete"
+                          Label="Delete"
                           Visibility="{Binding WhenRunningVisible}" />
             <AppBarSeparator />
             <AppBarToggleButton Icon="Sort" Label="Sort" />
