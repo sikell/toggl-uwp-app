@@ -104,6 +104,7 @@
       <DependentUpon>PageHeader.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\NavMenuItem.cs" />
+    <Compile Include="Services\Api\AbstractApiClient.cs" />
     <Compile Include="Services\Api\ApiClient.cs" />
     <Compile Include="Services\Api\IApiClient.cs" />
     <Compile Include="Services\Api\Model\ProjectDto.cs" />
