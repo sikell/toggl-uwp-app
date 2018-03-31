@@ -1,10 +1,11 @@
 ﻿using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
+using TogglTimer.Services.Api;
 using TogglTimer.Services.Api.Model;
 using TogglTimer.Services.Model;
 
-namespace TogglTimer.Services.Api
+namespace TogglTimer.Services
 {
     public class ProjectService : IProjectService
     {
