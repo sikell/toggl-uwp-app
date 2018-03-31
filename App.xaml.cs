@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -87,6 +88,7 @@ namespace TogglTimer
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
+            RegisterTypeIfMissing(typeof(HttpClient), typeof(ApiHttpClient), true);
             RegisterTypeIfMissing(typeof(IApiClient), typeof(ApiClient), true);
             RegisterTypeIfMissing(typeof(IAuthService), typeof(AuthService), true);
             RegisterTypeIfMissing(typeof(ITimeEntryService), typeof(TimeEntryService), true);
