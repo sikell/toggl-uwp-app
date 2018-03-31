@@ -19,6 +19,7 @@ namespace TogglTimer.Services.Api
 
         public async Task<ImmutableList<Project>> ListWorkspaceProjects(Workspace workspace)
         {
+            if (workspace == null) return null;
             return (await _apiClient.ListProjects(workspace.Id, _authService.GetToken())).Select(p => new Project()
             {
                 Id = p.id,
