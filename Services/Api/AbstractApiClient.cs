@@ -58,15 +58,24 @@ namespace TogglTimer.Services.Api
                 Content = body != null ? new StringContent(JsonConvert.SerializeObject(body)) : null
             };
 
-            var response = await _client.SendAsync(request);
-            if (!response.IsSuccessStatusCode)
+            try
             {
-                _log.Error("{0} {1} failed with {2}! ", httpMethod, url, response.StatusCode);
+                var response = await _client.SendAsync(request);
+                if (!response.IsSuccessStatusCode)
+                {
+                    _log.Error("{0} {1} failed with {2}! ", httpMethod, url, response.StatusCode);
+                    return default(TResult);
+                }
+
+                var readAsStringAsync = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<TResult>(readAsStringAsync);
+            }
+            catch (HttpRequestException e)
+            {
+                _log.Error("{0} {1} failed with {2}! ", httpMethod, url, e.Message);
+                _log.Error(e.Message, e);
                 return default(TResult);
             }
-
-            var readAsStringAsync = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<TResult>(readAsStringAsync);
         }
     }
 }

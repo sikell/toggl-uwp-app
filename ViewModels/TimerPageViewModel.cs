@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using MetroLog;
 using Prism.Commands;
@@ -51,14 +52,13 @@ namespace TogglTimer.ViewModels
             });
 
             RefreshCommand = new DelegateCommand(OnNavigatedTo);
-            
-            PropertyChanged += async (sender, args) =>
+
+            PropertyChanged += (sender, args) =>
             {
                 switch (args.PropertyName)
                 {
                     case nameof(Workspace):
-                        var projects = await _projectService.ListWorkspaceProjects(_workspace);
-                        Projects = new ObservableCollection<Project>(projects);
+                        LoadProjects(Task.FromResult<Workspace>(Workspace));
                         break;
                 }
             };
@@ -115,20 +115,43 @@ namespace TogglTimer.ViewModels
         public DelegateCommand StopTimerCommand { get; }
         public DelegateCommand RefreshCommand { get; }
 
-        public async void OnNavigatedTo()
+        public void OnNavigatedTo()
         {
             _log.Debug("Load current user info.");
-            var workspaces = await _workspaceService.ListUserWorkspaces();
-            Workspaces = new ObservableCollection<Workspace>(workspaces);
-            Workspace = workspaces.Last();
-            User = await _authService.GetUser();
-            Current = await _timeEntryService.GetCurrent();
-            var projects = await _projectService.ListWorkspaceProjects(_workspace);
-            Projects = new ObservableCollection<Project>(projects);
+            LoadUser();
+            var workspace = LoadWorkspaces();
+            LoadProjects(workspace);
+            LoadCurrentTimeEntry();
             NewEntry = new TimeEntry()
             {
                 Description = ""
             };
+        }
+
+        private async void LoadUser()
+        {
+            User = await _authService.GetUser();
+        }
+
+        private async void LoadCurrentTimeEntry()
+        {
+            Current = await _timeEntryService.GetCurrent();
+        }
+
+        private async void LoadProjects(Task<Workspace> workspace)
+        {
+            var projects = await _projectService.ListWorkspaceProjects(await workspace);
+            if (projects == null) return;
+            Projects = new ObservableCollection<Project>(projects);
+        }
+
+        private async Task<Workspace> LoadWorkspaces()
+        {
+            var workspaces = await _workspaceService.ListUserWorkspaces();
+            if (workspaces == null) return null;
+            Workspaces = new ObservableCollection<Workspace>(workspaces);
+            Workspace = workspaces.Last();
+            return Workspace;
         }
 
         private static Visibility BooleanToVisibility(bool value) => value ? Visibility.Visible : Visibility.Collapsed;

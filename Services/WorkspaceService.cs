@@ -19,7 +19,7 @@ namespace TogglTimer.Services
 
         public async Task<ImmutableList<Workspace>> ListUserWorkspaces()
         {
-            return (await _apiClient.ListWorkspaces(_authService.GetToken())).Select(s => new Workspace()
+            return (await _apiClient.ListWorkspaces(_authService.GetToken()))?.Select(s => new Workspace()
             {
                 Id = s.id,
                 Name = s.name

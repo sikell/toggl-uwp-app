@@ -56,7 +56,7 @@ namespace TogglTimer.Services
             }
 
             var user = await _apiClient.GetUser(_token);
-            return new User()
+            return (user == null) ? null : new User()
             {
                 Id = user.data.id,
                 Email = user.data.email,
