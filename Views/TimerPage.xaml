@@ -89,38 +89,30 @@
                 <TextBlock Text="{Binding User.Fullname, Mode=TwoWay}"
                            Style="{StaticResource GeneralTextBlockStyle}" />
                 <TextBlock Text="Running" Style="{StaticResource LabelTextBlockStyle}" />
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Current.Description, Mode=TwoWay}"
-                               Style="{StaticResource GeneralTextBlockStyle}"
-                               Visibility="{Binding WhenRunningVisible}" />
-                    <TextBox Text="{Binding NewEntry.Description, Mode=TwoWay}"
-                             Style="{StaticResource GeneralTextBoxStyle}"
-                             Visibility="{Binding WhenRunningNotVisible}" />
-                </StackPanel>
+                <TextBlock Text="{Binding Current.Description, Mode=TwoWay}"
+                            Style="{StaticResource GeneralTextBlockStyle}"
+                            Visibility="{Binding WhenRunningVisible}" />
+                <TextBox Text="{Binding NewEntry.Description, Mode=TwoWay}"
+                            Style="{StaticResource GeneralTextBoxStyle}"
+                            Visibility="{Binding WhenRunningNotVisible}" />
                 <TextBlock Text="Project" Style="{StaticResource LabelTextBlockStyle}" />
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Current.Project.Name}"
-                               Style="{StaticResource GeneralTextBlockStyle}"
-                               Visibility="{Binding WhenRunningVisible}" />
-                    <ComboBox SelectedValue="{Binding NewEntry.Project, Mode=TwoWay}"
-                              ItemsSource="{Binding Projects}"
-                              DisplayMemberPath="Name"
-                              Style="{StaticResource GeneralComboBoxStyle}"
-                              Visibility="{Binding WhenRunningNotVisible}" />
-                </StackPanel>
+                <TextBlock Text="{Binding Current.Project.Name}"
+                            Style="{StaticResource GeneralTextBlockStyle}"
+                            Visibility="{Binding WhenRunningVisible}" />
+                <ComboBox SelectedValue="{Binding NewEntry.Project, Mode=TwoWay}"
+                            ItemsSource="{Binding Projects}"
+                            DisplayMemberPath="Name"
+                            Style="{StaticResource GeneralComboBoxStyle}"
+                            Visibility="{Binding WhenRunningNotVisible}" />
                 <TextBlock Text="Duration" Style="{StaticResource LabelTextBlockStyle}" />
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding RunningTimeDuration}"
-                               Style="{StaticResource GeneralTextBlockStyle}" />
-                </StackPanel>
+                <TextBlock Text="{Binding RunningTimeDuration}"
+                            Style="{StaticResource GeneralTextBlockStyle}" />
                 <TextBlock Text="Workspace" Style="{StaticResource LabelTextBlockStyle}" />
-                <StackPanel Orientation="Horizontal">
-                    <ComboBox SelectedValue="{Binding Workspace, Mode=TwoWay}"
-                              ItemsSource="{Binding Workspaces}"
-                              DisplayMemberPath="Name"
-                              Style="{StaticResource GeneralComboBoxStyle}"
-                              Visibility="{Binding WhenRunningNotVisible}" />
-                </StackPanel>
+                <ComboBox SelectedValue="{Binding Workspace, Mode=TwoWay}"
+                            ItemsSource="{Binding Workspaces}"
+                            DisplayMemberPath="Name"
+                            Style="{StaticResource GeneralComboBoxStyle}"
+                            Visibility="{Binding WhenRunningNotVisible}" />
             </StackPanel>
         </Grid>
 
