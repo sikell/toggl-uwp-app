@@ -452,6 +452,11 @@
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
     </Style>
+    <Style x:Key="GeneralComboBoxStyle" TargetType="TextBox">
+        <Setter Property="Margin" Value="0,15,0,0" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+    </Style>
     <Style x:Key="GeneralPasswordBoxStyle" TargetType="PasswordBox">
         <Setter Property="Margin" Value="0,15,0,0" />
         <Setter Property="VerticalAlignment" Value="Top" />

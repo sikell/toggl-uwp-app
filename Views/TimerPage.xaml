@@ -105,6 +105,7 @@
                     <ComboBox SelectedValue="{Binding NewEntry.Project, Mode=TwoWay}"
                               ItemsSource="{Binding Projects}"
                               DisplayMemberPath="Name"
+                              Style="{StaticResource GeneralComboBoxStyle}"
                               Visibility="{Binding WhenRunningNotVisible}" />
                 </StackPanel>
                 <TextBlock Text="Duration" Style="{StaticResource LabelTextBlockStyle}" />
@@ -117,6 +118,7 @@
                     <ComboBox SelectedValue="{Binding Workspace, Mode=TwoWay}"
                               ItemsSource="{Binding Workspaces}"
                               DisplayMemberPath="Name"
+                              Style="{StaticResource GeneralComboBoxStyle}"
                               Visibility="{Binding WhenRunningNotVisible}" />
                 </StackPanel>
             </StackPanel>
