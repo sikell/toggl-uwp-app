@@ -452,7 +452,7 @@
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
     </Style>
-    <Style x:Key="GeneralComboBoxStyle" TargetType="TextBox">
+    <Style x:Key="GeneralComboBoxStyle" TargetType="ComboBox">
         <Setter Property="Margin" Value="0,15,0,0" />
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -470,12 +470,12 @@
     <Style x:Key="GeneralTextBlockStyle" TargetType="TextBlock">
         <Setter Property="Margin" Value="0,0,0,15" />
         <Setter Property="VerticalAlignment" Value="Top" />
-        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
     </Style>
     <Style x:Key="LabelTextBlockStyle" TargetType="TextBlock">
         <Setter Property="Margin" Value="0,15,0,0" />
         <Setter Property="VerticalAlignment" Value="Top" />
-        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="FontSize" Value="12" />
     </Style>
 </ResourceDictionary>
