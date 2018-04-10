@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Immutable;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using TogglTimer.Services.Api;
 using TogglTimer.Services.Api.Model;
@@ -38,6 +41,12 @@ namespace TogglTimer.Services
             var timeEntry = await _apiClient.GetCurrentRunning(_authService.GetToken());
             var newTimeEntry = await _apiClient.StopCurrentTimer(timeEntry.id, _authService.GetToken());
             return await ConvertToTimeEntry(newTimeEntry);
+        }
+
+        public async Task<ImmutableList<TimeEntry>> ListLastEntries()
+        {
+            var timeEntries = await _apiClient.ListTimeEntries(DateTime.Now, DateTime.Now, _authService.GetToken());
+            return (await Task.WhenAll(timeEntries.Select(ConvertToTimeEntry))).ToImmutableList();
         }
 
         private async Task<TimeEntry> ConvertToTimeEntry(TimeEntryDto newTimeEntry)

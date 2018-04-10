@@ -50,6 +50,15 @@ namespace TogglTimer.Services.Api
                 "time_entries/" + entryId + "/stop", ToBasicAuth(apiToken), null))?.data;
         }
 
+        public async Task<Collection<TimeEntryDto>> ListTimeEntries(DateTime startDate, DateTime endDate,
+            string apiToken)
+        {
+            return await DoGet<Collection<TimeEntryDto>>(
+                "time_entries?start_date=2018-04-10T00%3A00%3A00%2B02%3A00&end_date=2018-04-11T00%3A00%3A00%2B02%3A00",
+                ToBasicAuth(apiToken)
+            );
+        }
+
         public async Task<Collection<WorkspaceDto>> ListWorkspaces(string apiToken)
         {
             return await DoGet<Collection<WorkspaceDto>>("workspaces", ToBasicAuth(apiToken));
@@ -57,13 +66,13 @@ namespace TogglTimer.Services.Api
 
         public async Task<Collection<ProjectDto>> ListProjects(long workspaceId, string apiToken)
         {
-            return await DoGet<Collection<ProjectDto>>("workspaces/" + workspaceId + "/projects", ToBasicAuth(apiToken));
+            return await DoGet<Collection<ProjectDto>>("workspaces/" + workspaceId + "/projects",
+                ToBasicAuth(apiToken));
         }
 
         public async Task<ProjectDto> GetProject(long projectId, string apiToken)
         {
             return (await DoGet<DataWrapperDto<ProjectDto>>("projects/" + projectId, ToBasicAuth(apiToken))).data;
         }
-
     }
 }
