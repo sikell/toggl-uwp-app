@@ -2,9 +2,9 @@
 
 namespace TogglTimer.Views
 {
-    public sealed partial class DrillInPage : Page
+    public sealed partial class TimeEntriesPage : Page
     {
-        public DrillInPage()
+        public TimeEntriesPage()
         {
             this.InitializeComponent();
         }

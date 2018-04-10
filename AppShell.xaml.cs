@@ -12,7 +12,6 @@ using Windows.UI.Xaml.Navigation;
 using Prism.Commands;
 using TogglTimer.Controls;
 using TogglTimer.Views;
-using DrillInPage = TogglTimer.Views.DrillInPage;
 
 namespace TogglTimer
 {
@@ -44,7 +43,7 @@ namespace TogglTimer
                 {
                     Symbol = Symbol.Favorite,
                     Label = "Drill In Page",
-                    DestPage = typeof(DrillInPage)
+                    DestPage = typeof(TimeEntriesPage)
                 }
             });
 
