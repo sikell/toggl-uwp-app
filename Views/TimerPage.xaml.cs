@@ -1,5 +1,7 @@
 ﻿using Windows.Graphics.Display;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Navigation;
+using TogglTimer.ViewModels;
 
 namespace TogglTimer.Views
 {
@@ -9,6 +11,13 @@ namespace TogglTimer.Views
         {
             InitializeComponent();
             Loaded += CommandBarPage_Loaded;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            var viewModel = (INavigationListeningViewModel) DataContext;
+            viewModel.OnNavigatedTo();
         }
 
         private void CommandBarPage_Loaded(object sender, RoutedEventArgs e)

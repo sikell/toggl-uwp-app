@@ -12,7 +12,7 @@ using TogglTimer.Services.Model;
 
 namespace TogglTimer.ViewModels
 {
-    public class TimerPageViewModel : BindableBase
+    public class TimerPageViewModel : BindableBase, INavigationListeningViewModel
     {
         private readonly ILogger _log = LogManagerFactory.DefaultLogManager.GetLogger<TimerPageViewModel>();
 
@@ -36,19 +36,16 @@ namespace TogglTimer.ViewModels
             _projectService = projectService;
             _workspaceService = workspaceService;
 
-            OnNavigatedTo();
-
-            StartTimerCommand =
-                new DelegateCommand(async () =>
-                {
-                    NewEntry.Start = DateTime.Now;
-                    Current = await _timeEntryService.StartCurrentTimer(_newEntry);
-                });
+            StartTimerCommand = new DelegateCommand(async () =>
+            {
+                NewEntry.Start = DateTime.Now;
+                Current = await _timeEntryService.StartCurrentTimer(_newEntry);
+            });
 
             StopTimerCommand = new DelegateCommand(async () =>
             {
                 await _timeEntryService.StopCurrentTimer();
-                Current = await _timeEntryService.GetCurrent();
+                LoadCurrentTimeEntry();
             });
 
             RefreshCommand = new DelegateCommand(OnNavigatedTo);
@@ -58,7 +55,7 @@ namespace TogglTimer.ViewModels
                 switch (args.PropertyName)
                 {
                     case nameof(Workspace):
-                        LoadProjects(Task.FromResult<Workspace>(Workspace));
+                        LoadProjects(Task.FromResult(Workspace));
                         break;
                 }
             };
@@ -119,13 +116,13 @@ namespace TogglTimer.ViewModels
         {
             _log.Debug("Load current user info.");
             LoadUser();
-            var workspace = LoadWorkspaces();
-            LoadProjects(workspace);
-            LoadCurrentTimeEntry();
             NewEntry = new TimeEntry()
             {
                 Description = ""
             };
+            var workspace = LoadWorkspaces();
+            LoadProjects(workspace);
+            LoadCurrentTimeEntry();
         }
 
         private async void LoadUser()

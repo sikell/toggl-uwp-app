@@ -128,6 +128,7 @@
     <Compile Include="Services\Model\Workspace.cs" />
     <Compile Include="Services\TimeEntryService.cs" />
     <Compile Include="Services\WorkspaceService.cs" />
+    <Compile Include="ViewModels\INavigationListeningViewModel.cs" />
     <Compile Include="ViewModels\INavigationViewModel.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\TimerPageViewModel.cs" />
