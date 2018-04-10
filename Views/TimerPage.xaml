@@ -10,6 +10,12 @@
     mvvm:ViewModelLocator.AutoWireViewModel="True">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState>
@@ -36,11 +42,6 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
         <CommandBar x:Name="Topbar" Visibility="Collapsed" HorizontalContentAlignment="Stretch"
                     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <AppBarButton Icon="Refresh"
@@ -87,31 +88,47 @@
             <TextBlock Text="User" Style="{StaticResource LabelTextBlockStyle}" />
             <TextBlock Text="{Binding User.Fullname, Mode=TwoWay}"
                        Style="{StaticResource GeneralTextBlockStyle}" />
-            <TextBlock Text="Running" Style="{StaticResource LabelTextBlockStyle}" />
-            <TextBlock Text="{Binding Current.Description, Mode=TwoWay}"
-                       Style="{StaticResource GeneralTextBlockStyle}"
-                       Visibility="{Binding WhenRunningVisible}" />
-            <TextBox Text="{Binding NewEntry.Description, Mode=TwoWay}"
-                     Style="{StaticResource GeneralTextBoxStyle}"
-                     Visibility="{Binding WhenRunningNotVisible}" />
-            <TextBlock Text="Project" Style="{StaticResource LabelTextBlockStyle}" />
-            <TextBlock Text="{Binding Current.Project.Name}"
-                       Style="{StaticResource GeneralTextBlockStyle}"
-                       Visibility="{Binding WhenRunningVisible}" />
-            <ComboBox SelectedValue="{Binding NewEntry.Project, Mode=TwoWay}"
-                      ItemsSource="{Binding Projects}"
-                      DisplayMemberPath="Name"
-                      Style="{StaticResource GeneralComboBoxStyle}"
-                      Visibility="{Binding WhenRunningNotVisible}" />
-            <TextBlock Text="Duration" Style="{StaticResource LabelTextBlockStyle}" />
-            <TextBlock Text="{Binding RunningTimeDuration}"
-                       Style="{StaticResource GeneralTextBlockStyle}" />
-            <TextBlock Text="Workspace" Style="{StaticResource LabelTextBlockStyle}" />
-            <ComboBox SelectedValue="{Binding Workspace, Mode=TwoWay}"
-                      ItemsSource="{Binding Workspaces}"
-                      DisplayMemberPath="Name"
-                      Style="{StaticResource GeneralComboBoxStyle}"
-                      Visibility="{Binding WhenRunningNotVisible}" />
+
+            <StackPanel Visibility="{Binding WhenRunningVisible}">
+                <TextBlock Text="Running" Style="{StaticResource LabelTextBlockStyle}" />
+                <TextBlock Text="{Binding Current.Description, Mode=TwoWay}"
+                           Style="{StaticResource GeneralTextBlockStyle}" />
+
+                <TextBlock Text="Project" Style="{StaticResource LabelTextBlockStyle}" />
+                <TextBlock Text="{Binding Current.Project.Name}"
+                           Style="{StaticResource GeneralTextBlockStyle}" />
+
+                <TextBlock Text="Duration" Style="{StaticResource LabelTextBlockStyle}" />
+                <TextBlock Text="{Binding RunningTimeDuration}"
+                           Style="{StaticResource GeneralTextBlockStyle}" />
+            </StackPanel>
+
+            <StackPanel Visibility="{Binding WhenRunningNotVisible}">
+                <TextBlock Text="Description" Style="{StaticResource LabelTextBlockStyle}" />
+                <TextBox Text="{Binding NewEntry.Description, Mode=TwoWay}"
+                         Style="{StaticResource GeneralTextBoxStyle}" />
+            </StackPanel>
+
+            <Grid Visibility="{Binding WhenRunningNotVisible}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Margin="0, 0, 10, 0">
+                    <TextBlock Text="Project" Style="{StaticResource LabelTextBlockStyle}" />
+                    <ComboBox SelectedValue="{Binding NewEntry.Project, Mode=TwoWay}"
+                              ItemsSource="{Binding Projects}"
+                              DisplayMemberPath="Name"
+                              Style="{StaticResource GeneralComboBoxStyle}" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="10, 0, 0, 0">
+                    <TextBlock Text="Workspace" Style="{StaticResource LabelTextBlockStyle}" />
+                    <ComboBox SelectedValue="{Binding Workspace, Mode=TwoWay}"
+                              ItemsSource="{Binding Workspaces}"
+                              DisplayMemberPath="Name"
+                              Style="{StaticResource GeneralComboBoxStyle}" />
+                </StackPanel>
+            </Grid>
         </StackPanel>
 
         <CommandBar x:Name="Bottombar" Grid.Row="2" Visibility="Collapsed" HorizontalContentAlignment="Stretch"
