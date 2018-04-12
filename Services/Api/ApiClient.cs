@@ -4,15 +4,13 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using MetroLog;
 using TogglTimer.Services.Api.Model;
+using static System.Uri;
 
 namespace TogglTimer.Services.Api
 {
     public class ApiClient : AbstractApiClient, IApiClient
     {
-        private readonly ILogger _log = LogManagerFactory.DefaultLogManager.GetLogger<ApiClient>();
-
         public ApiClient(HttpClient client) : base(client)
         {
             client.BaseAddress = new Uri("https://www.toggl.com/api/v8/");
@@ -53,8 +51,10 @@ namespace TogglTimer.Services.Api
         public async Task<Collection<TimeEntryDto>> ListTimeEntries(DateTime startDate, DateTime endDate,
             string apiToken)
         {
+            var startDateString = EscapeDataString(startDate.ToString("yyyy-MM-ddTHH:mm:ssK"));
+            var endDateString = EscapeDataString(endDate.ToString("yyyy-MM-ddTHH:mm:ssK"));
             return await DoGet<Collection<TimeEntryDto>>(
-                "time_entries?start_date=2018-04-10T00%3A00%3A00%2B02%3A00&end_date=2018-04-11T00%3A00%3A00%2B02%3A00",
+                "time_entries?start_date=" + startDateString + "&end_date=" + endDateString,
                 ToBasicAuth(apiToken)
             );
         }

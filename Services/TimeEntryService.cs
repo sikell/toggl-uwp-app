@@ -45,7 +45,9 @@ namespace TogglTimer.Services
 
         public async Task<ImmutableList<TimeEntry>> ListLastEntries()
         {
-            var timeEntries = await _apiClient.ListTimeEntries(DateTime.Now, DateTime.Now, _authService.GetToken());
+            var startDate = DateTime.Today;
+            var endDate = DateTime.Now;
+            var timeEntries = await _apiClient.ListTimeEntries(startDate, endDate, _authService.GetToken());
             return (await Task.WhenAll(timeEntries.Select(ConvertToTimeEntry))).ToImmutableList();
         }
 
