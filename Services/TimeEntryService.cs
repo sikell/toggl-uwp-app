@@ -60,7 +60,8 @@ namespace TogglTimer.Services
                 Id = newTimeEntry.id,
                 Description = newTimeEntry.description,
                 Start = DateTime.Parse(newTimeEntry.start),
-                Project = newTimeEntry.pid == null ? null : await _projectService.GetProject(newTimeEntry.pid.Value)
+                Project = newTimeEntry.pid == null ? null : await _projectService.GetProject(newTimeEntry.pid.Value),
+                Duration = TimeSpan.FromSeconds(newTimeEntry.duration)
             };
         }
 

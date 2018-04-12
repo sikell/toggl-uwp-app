@@ -45,21 +45,37 @@
             </controls:PageHeader.HeaderContent>
         </controls:PageHeader>
 
-        <StackPanel Grid.Row="1">
+        <Grid Grid.Row="1">
             <ListView EntranceNavigationTransitionInfo.IsTargetElement="True"
                       IsItemClickEnabled="True"
-                      ItemsSource="{Binding TimeEntries, Mode=TwoWay}"
-                      Margin="24,0,0,0">
+                      ItemsSource="{Binding TimeEntries, Mode=TwoWay}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="model:TimeEntry">
                         <Grid>
-                            <TextBlock Style="{StaticResource GeneralTextBlockStyle}"
-                                       Text="{Binding Description}" />
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" 
+                                        HorizontalAlignment="Stretch"
+                                        Margin="15,0,0,0">
+                                <TextBlock Style="{StaticResource GeneralTextBlockStyle}"
+                                           Text="{Binding Description}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Style="{StaticResource GeneralTextBlockStyle}"
+                                           Text="{Binding Duration}" />
+                            </StackPanel>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </StackPanel>
+        </Grid>
 
     </Grid>
 </Page>

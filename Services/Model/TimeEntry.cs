@@ -9,5 +9,6 @@ namespace TogglTimer.Services.Model
         public string Description { get; set; }
         public DateTime Start { get; set; }
         public Project Project { get; set; }
+        public TimeSpan Duration { get; set; }
     }
 }
