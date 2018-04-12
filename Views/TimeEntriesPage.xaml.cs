@@ -1,20 +1,21 @@
 ﻿using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
+using TogglTimer.ViewModels;
 
 namespace TogglTimer.Views
 {
-    public sealed partial class TimeEntriesPage : Page
+    public sealed partial class TimeEntriesPage
     {
         public TimeEntriesPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
-        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.Frame.Navigate(
-                typeof(TogglTimer.Views.BasicSubPage),
-                e.ClickedItem,
-                new Windows.UI.Xaml.Media.Animation.DrillInNavigationTransitionInfo());
+            base.OnNavigatedTo(e);
+            var viewModel = (INavigationListeningViewModel) DataContext;
+            viewModel.OnNavigatedTo();
         }
     }
 }

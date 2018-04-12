@@ -1,13 +1,21 @@
 ﻿<Page
-    x:Class="TogglTimer.Views.DrillInPage"
+    x:Class="TogglTimer.Views.TimeEntriesPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:TogglTimer.Services.Model"
     xmlns:controls="using:TogglTimer.Controls"
-    mc:Ignorable="d">
+    xmlns:mvvm="using:Prism.Windows.Mvvm"
+    mc:Ignorable="d"
+    mvvm:ViewModelLocator.AutoWireViewModel="True">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState>
@@ -15,8 +23,8 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowSnapPoint}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ContentList.Margin" Value="12,0,0,0"/>
-                        <Setter Target="title.Style" Value="{StaticResource PageTitleTextBlockStyle}"/>
+                        <Setter Target="ContentList.Margin" Value="12,0,0,0" />
+                        <Setter Target="title.Style" Value="{StaticResource PageTitleTextBlockStyle}" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState>
@@ -24,63 +32,34 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource MinWindowSnapPoint}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ContentList.Margin" Value="0"/>
-                        <Setter Target="title.Style" Value="{StaticResource NarrowPageTitleTextBlockStyle}"/>
+                        <Setter Target="ContentList.Margin" Value="0" />
+                        <Setter Target="title.Style" Value="{StaticResource NarrowPageTitleTextBlockStyle}" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <controls:PageHeader>
+        <controls:PageHeader Grid.Row="0">
             <controls:PageHeader.HeaderContent>
-                <TextBlock Style="{StaticResource PageTitleTextBlockStyle}" Text="Drill-in Page"/>
+                <TextBlock Style="{StaticResource PageTitleTextBlockStyle}" Text="Time Entries" />
             </controls:PageHeader.HeaderContent>
         </controls:PageHeader>
 
-        <ListView x:Name="ContentList"
-                  Grid.Row="1"
-                  Header="Click An Item To Drill In"
-                  EntranceNavigationTransitionInfo.IsTargetElement="True"
-                  IsItemClickEnabled="True"
-                  ItemClick="ListView_ItemClick"
-                  Margin="24,0,0,0">
-            <ListView.HeaderTemplate>
-                <DataTemplate>
-                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Margin="12,4" Text="{Binding}"/>
-                </DataTemplate>
-            </ListView.HeaderTemplate>
-            <ListViewItem>Item 1</ListViewItem>
-            <ListViewItem>Item 2</ListViewItem>
-            <ListViewItem>Item 3</ListViewItem>
-            <ListViewItem>Item 4</ListViewItem>
-            <ListViewItem>Item 5</ListViewItem>
-            <ListViewItem>Item 6</ListViewItem>
-            <ListViewItem>Item 7</ListViewItem>
-            <ListViewItem>Item 8</ListViewItem>
-            <ListViewItem>Item 9</ListViewItem>
-            <ListViewItem>Item 10</ListViewItem>
-            <ListViewItem>Item 11</ListViewItem>
-            <ListViewItem>Item 12</ListViewItem>
-            <ListViewItem>Item 13</ListViewItem>
-            <ListViewItem>Item 14</ListViewItem>
-            <ListViewItem>Item 15</ListViewItem>
-            <ListViewItem>Item 16</ListViewItem>
-            <ListViewItem>Item 17</ListViewItem>
-            <ListViewItem>Item 18</ListViewItem>
-            <ListViewItem>Item 19</ListViewItem>
-            <ListViewItem>Item 20</ListViewItem>
-            <ListViewItem>Item 21</ListViewItem>
-            <ListViewItem>Item 22</ListViewItem>
-            <ListViewItem>Item 23</ListViewItem>
-            <ListViewItem>Item 24</ListViewItem>
-            <ListViewItem>Item 25</ListViewItem>
-        </ListView>
+        <StackPanel Grid.Row="1">
+            <ListView EntranceNavigationTransitionInfo.IsTargetElement="True"
+                      IsItemClickEnabled="True"
+                      ItemsSource="{Binding TimeEntries, Mode=TwoWay}"
+                      Margin="24,0,0,0">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:TimeEntry">
+                        <Grid>
+                            <TextBlock Style="{StaticResource GeneralTextBlockStyle}"
+                                       Text="{Binding Description}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
 
     </Grid>
 </Page>
-

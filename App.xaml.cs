@@ -14,7 +14,6 @@ using Prism.Unity.Windows;
 using TogglTimer.Services;
 using TogglTimer.Services.Api;
 using TogglTimer.Views;
-using LandingPage = TogglTimer.Views.LandingPage;
 
 namespace TogglTimer
 {
